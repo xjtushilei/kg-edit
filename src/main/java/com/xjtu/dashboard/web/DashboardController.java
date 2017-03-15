@@ -1,6 +1,7 @@
 package com.xjtu.dashboard.web;
 
 import com.xjtu.common.domain.Error;
+import com.xjtu.common.domain.Success;
 import com.xjtu.dashboard.domain.ClassStatus;
 import com.xjtu.dashboard.repository.ClassStatusRepository;
 import io.swagger.annotations.ApiOperation;
@@ -57,7 +58,7 @@ public class DashboardController {
             logger.error("创建课程 failed, ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error(e.toString()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(new Success("创建成功！"));
     }
 
     @RequestMapping(value = "/updateClass", method = RequestMethod.GET)
@@ -72,7 +73,7 @@ public class DashboardController {
             logger.error("重置课程失败, ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error(e.toString()));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.status(HttpStatus.OK).body(new Success("成功更新！"));
     }
 
 }

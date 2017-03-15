@@ -12,6 +12,7 @@ import com.xjtu.datainput.service.GetChapterList;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,11 +102,11 @@ public class DatainputController {
     @RequestMapping(value = "/searchTerms", method = RequestMethod.GET)
     @ApiOperation(value = "展示该章节的知识点", notes = "输入章节等信息，展示该章节的知识点，让老师能够知道已经写过哪些知识点")
     public ResponseEntity searchTerms(
-            @RequestParam(value = "ParentChapterID", defaultValue = "ParentChapterID") String ParentChapterID,
+            @RequestParam(value = "ParentChapterID", defaultValue = "") String ParentChapterID,
             @RequestParam(value = "ParentChapterName", defaultValue = "ParentChapterName") String ParentChapterName,
-            @RequestParam(value = "ChapterID", defaultValue = "ChapterID") String ChapterID,
+            @RequestParam(value = "ChapterID", defaultValue = "") String ChapterID,
             @RequestParam(value = "ChapterName", defaultValue = "ChapterName") String ChapterName,
-            @RequestParam(value = "ChildrenChapterID", defaultValue = "ChildrenChapterID") String ChildrenChapterID,
+            @RequestParam(value = "ChildrenChapterID", defaultValue = "") String ChildrenChapterID,
             @RequestParam(value = "ChildrenChapterName", defaultValue = "ChildrenChapterName") String ChildrenChapterName
     ) {
         List<Relation> relationList = new ArrayList<>();
@@ -131,6 +132,13 @@ public class DatainputController {
 
         try {
             relationRepository.delete(relationID);
+            //删除没用的信息
+            termRepository.findNoUse().iterator().forEachRemaining(id -> {
+                termRepository.delete(id);
+            });
+            catalogRepository.findNoUse().iterator().forEachRemaining(id -> {
+                catalogRepository.delete(id);
+            });
         } catch (Exception e) {
             logger.error("删除relation failed。 ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("删除失败！" + e.toString()));
@@ -159,28 +167,30 @@ public class DatainputController {
 
     @RequestMapping(value = "/modifyRelation", method = RequestMethod.GET)
     @ApiOperation(value = "modify一个知识点", notes = "修改一个知识点")
+    @Transactional
     public ResponseEntity modifyRelation(
             @RequestParam(value = "relationID", defaultValue = "123") Long relationID,
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
-            @RequestParam(value = "ClassName", defaultValue = "测试课程") String ClassName,
-            @RequestParam(value = "NewTermName", defaultValue = "NewTermName") String NewTermName,
-            @RequestParam(value = "TermName", defaultValue = "测试知识点") String TermName,
-            @RequestParam(value = "ParentChapterID", defaultValue = "ParentChapterID") String ParentChapterID,
-            @RequestParam(value = "ParentChapterName", defaultValue = "ParentChapterName") String ParentChapterName,
-            @RequestParam(value = "ChapterID", defaultValue = "ChapterID") String ChapterID,
-            @RequestParam(value = "ChapterName", defaultValue = "ChapterName") String ChapterName,
-            @RequestParam(value = "ChildrenChapterID", defaultValue = "ChildrenChapterID") String ChildrenChapterID,
-            @RequestParam(value = "ChildrenChapterName", defaultValue = "ChildrenChapterName") String ChildrenChapterName,
-            @RequestParam(value = "Note", defaultValue = "Note") String Note
+            @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
+            @RequestParam(value = "className", defaultValue = "测试课程") String ClassName,
+            @RequestParam(value = "newTermName", defaultValue = "NewTermName") String NewTermName,
+            @RequestParam(value = "termName", defaultValue = "测试知识点") String TermName,
+            @RequestParam(value = "parentChapterID", defaultValue = "ParentChapterID") String ParentChapterID,
+            @RequestParam(value = "parentChapterName", defaultValue = "ParentChapterName") String ParentChapterName,
+            @RequestParam(value = "chapterID", defaultValue = "ChapterID") String ChapterID,
+            @RequestParam(value = "chapterName", defaultValue = "ChapterName") String ChapterName,
+            @RequestParam(value = "childrenChapterID", defaultValue = "ChildrenChapterID") String ChildrenChapterID,
+            @RequestParam(value = "childrenChapterName", defaultValue = "ChildrenChapterName") String ChildrenChapterName,
+            @RequestParam(value = "note", defaultValue = "Note") String Note
     ) {
 
         try {
-            relationRepository.delete(relationID);
+            deleteReletionByCatalogID(relationID);
         } catch (Exception e) {
             logger.error("删除relation failed。 ", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("修改失败！(因删除之前的出现问题！请刷新重试)" + e.toString()));
         }
         try {
-            writeKnowledge(ClassID, ClassName, TermName, ParentChapterID, ParentChapterName, ChapterID, ChapterName, ChildrenChapterID, ChildrenChapterName, Note);
+            writeKnowledge(ClassID, ClassName, NewTermName, ParentChapterID, ParentChapterName, ChapterID, ChapterName, ChildrenChapterID, ChildrenChapterName, Note);
         } catch (Exception e) {
             logger.error("修改relation failed。 ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("修改失败！" + e.toString()));
