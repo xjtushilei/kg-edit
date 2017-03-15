@@ -191,4 +191,26 @@ public class DatainputController {
         logger.info("修改relation 成功。 ");
         return ResponseEntity.status(HttpStatus.OK).body(new Success("修改成功！"));
     }
+
+    //    @RequestMapping(value = "/getRelationAndTermCount", method = RequestMethod.GET)
+    //    public ResponseEntity getRelationAndTermCount(
+    //            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+    //    ) {
+    //
+    //        try {
+    //            HashMap<String , Object> result=new HashMap<>();
+    //            result.put("termCount",termRepository.findByClassID(ClassID));
+    //            result.put("relation", datainputSubmitDAO.getRelationCount(ClassName));
+    //        } catch (Exception e) {
+    //            logger.error("删除relation failed。 ", e);
+    //        }
+    //        try {
+    //            writeKnowledge(ClassID, ClassName, TermName, ParentChapterID, ParentChapterName, ChapterID, ChapterName, ChildrenChapterID, ChildrenChapterName, Note);
+    //        } catch (Exception e) {
+    //            logger.error("修改relation failed。 ", e);
+    //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("修改失败！" + e.toString()));
+    //        }
+    //        logger.info("修改relation 成功。 ");
+    //        return ResponseEntity.status(HttpStatus.OK).body(new Success("修改成功！"));
+    //    }
 }

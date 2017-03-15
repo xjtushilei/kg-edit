@@ -1,6 +1,7 @@
 package com.xjtu.dashboard.domain;
 
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,13 +15,21 @@ import java.util.Date;
 public class ClassStatus {
     @Id
     private String classid;
+
     private String classname;
+
     private String datainput = "正在进行";
+
     private String spider = "未开始";
+
     private String dependency = "未开始";
+
     private String rectification = "未开始";
+
     private String store = "未开始";
+
     private String visualization = "未开始";
+
     private Date lastModifyTime;
 
     public String getClassid() {

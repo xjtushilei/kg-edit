@@ -2,6 +2,7 @@ package com.xjtu.datainput.repository;
 
 import com.xjtu.datainput.domain.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ import java.util.List;
 public interface TermRepository extends JpaRepository<Term, Long> {
 
     List<Term> findByClassIDAndTermName(String classID, String termName);
+
+    List<Term> findByClassID(String classID);
 
 }

@@ -1,10 +1,7 @@
 package com.xjtu.datainput.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -16,12 +13,14 @@ public class Term {
     @Id
     @GeneratedValue
     private Long termID;
+
     private String termName;
 
     private String classID;
     private String className;
 
     private String note;
+
     private Date lastModifyTime;
 
     public Term() {

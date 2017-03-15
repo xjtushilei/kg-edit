@@ -1,10 +1,7 @@
 package com.xjtu.datainput.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by shilei on 2017/3/13.
@@ -16,11 +13,15 @@ public class Relation {
     @GeneratedValue
     private Long relationID;
 
+
     private Long catalogID;
+
     private Long termID;
+
     private String termName;
 
     private String classID;
+
     private String className;
 
     public Relation() {

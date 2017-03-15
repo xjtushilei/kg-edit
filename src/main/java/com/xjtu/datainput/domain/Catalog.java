@@ -1,10 +1,7 @@
 package com.xjtu.datainput.domain;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by shilei on 2017/3/13.
@@ -16,11 +13,12 @@ public class Catalog {
     @GeneratedValue
     private Long catalogID;
 
-
     private String parentChapterID;
+
     private String parentChapterName;
 
     private String chapterID;
+
     private String chapterName;
 
     private String childrenChapterID;
