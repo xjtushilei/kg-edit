@@ -4,10 +4,7 @@ import com.xjtu.common.domain.Error;
 import com.xjtu.common.domain.Success;
 import com.xjtu.dashboard.domain.ClassStatus;
 import com.xjtu.dashboard.repository.ClassStatusRepository;
-import com.xjtu.datainput.domain.Catalog;
-import com.xjtu.datainput.domain.CatalogListLevel1;
-import com.xjtu.datainput.domain.Relation;
-import com.xjtu.datainput.domain.Term;
+import com.xjtu.datainput.domain.*;
 import com.xjtu.datainput.repository.CatalogRepository;
 import com.xjtu.datainput.repository.RelationRepository;
 import com.xjtu.datainput.repository.TermRepository;
@@ -129,7 +126,7 @@ public class DatainputController {
     @RequestMapping(value = "/deleteReletionByRelationID", method = RequestMethod.GET)
     @ApiOperation(value = "删除知识点", notes = "删除知识点")
     public ResponseEntity deleteReletionByCatalogID(
-            @RequestParam(value = "relationID", defaultValue = "relationID") Long relationID
+            @RequestParam(value = "relationID", defaultValue = "123") Long relationID
     ) {
 
         try {
@@ -163,7 +160,7 @@ public class DatainputController {
     @RequestMapping(value = "/modifyRelation", method = RequestMethod.GET)
     @ApiOperation(value = "modify一个知识点", notes = "修改一个知识点")
     public ResponseEntity modifyRelation(
-            @RequestParam(value = "relationID", defaultValue = "relationID") Long relationID,
+            @RequestParam(value = "relationID", defaultValue = "123") Long relationID,
             @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
             @RequestParam(value = "ClassName", defaultValue = "测试课程") String ClassName,
             @RequestParam(value = "NewTermName", defaultValue = "NewTermName") String NewTermName,
@@ -192,25 +189,19 @@ public class DatainputController {
         return ResponseEntity.status(HttpStatus.OK).body(new Success("修改成功！"));
     }
 
-    //    @RequestMapping(value = "/getRelationAndTermCount", method = RequestMethod.GET)
-    //    public ResponseEntity getRelationAndTermCount(
-    //            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
-    //    ) {
-    //
-    //        try {
-    //            HashMap<String , Object> result=new HashMap<>();
-    //            result.put("termCount",termRepository.findByClassID(ClassID));
-    //            result.put("relation", datainputSubmitDAO.getRelationCount(ClassName));
-    //        } catch (Exception e) {
-    //            logger.error("删除relation failed。 ", e);
-    //        }
-    //        try {
-    //            writeKnowledge(ClassID, ClassName, TermName, ParentChapterID, ParentChapterName, ChapterID, ChapterName, ChildrenChapterID, ChildrenChapterName, Note);
-    //        } catch (Exception e) {
-    //            logger.error("修改relation failed。 ", e);
-    //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("修改失败！" + e.toString()));
-    //        }
-    //        logger.info("修改relation 成功。 ");
-    //        return ResponseEntity.status(HttpStatus.OK).body(new Success("修改成功！"));
-    //    }
+    @RequestMapping(value = "/getRelationAndTermCount", method = RequestMethod.GET)
+    public ResponseEntity getRelationAndTermCount(
+            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+    ) {
+        HashMap<String, Object> result = new HashMap<>();
+        try {
+            //                new RelationCatalog()
+            result.put("termCount", termRepository.findByClassID(ClassID));
+            result.put("relation", relationRepository.findRelationByClassID(ClassID));
+        } catch (Exception e) {
+            logger.error("查找本章节下知识点 failed。 ", e);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
 }
