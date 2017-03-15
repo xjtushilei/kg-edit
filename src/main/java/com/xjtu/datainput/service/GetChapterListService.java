@@ -24,7 +24,7 @@ import java.util.Map;
  * Created by shilei on 2017/3/14.
  */
 
-public class GetChapterList {
+public class GetChapterListService {
 
 
     public ArrayList<CatalogListLevel1> get(String CourseID) {

@@ -2,17 +2,14 @@ package com.xjtu.datainput.web;
 
 import com.xjtu.common.domain.Error;
 import com.xjtu.common.domain.Success;
-import com.xjtu.dashboard.domain.ClassStatus;
-import com.xjtu.dashboard.repository.ClassStatusRepository;
 import com.xjtu.datainput.domain.*;
 import com.xjtu.datainput.repository.CatalogRepository;
 import com.xjtu.datainput.repository.RelationRepository;
 import com.xjtu.datainput.repository.TermRepository;
-import com.xjtu.datainput.service.GetChapterList;
+import com.xjtu.datainput.service.GetChapterListService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
@@ -155,7 +151,7 @@ public class DatainputController {
     ) {
         ArrayList<CatalogListLevel1> result = new ArrayList<>();
         try {
-            result = new GetChapterList().get(CourseID);
+            result = new GetChapterListService().get(CourseID);
         } catch (Exception e) {
             logger.error("获取章节列表失败 failed。 ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("获取章节列表失败" + e.toString()));
