@@ -95,7 +95,7 @@ public class SpiderService {
                 String facetName = parseFragmentService.titleToFacet(facet, relation); // 分面名全部设为一级标题（新标准）
                 facetName = facetAlgoService.getfacet(facetName); // 采用分面算法进行处理
                 Text text = new Text(fragmentContent, fragmentUrl, fragmentPostTime, fragmentScratchTime, termID, termName, facetName);
-//                logger.info(fragment.toString());
+//                logger.info(text.toString());
                 list.add(text);
             }
         } else {

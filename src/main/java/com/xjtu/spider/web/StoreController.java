@@ -18,6 +18,7 @@ import com.xjtu.spider.repository.TextRepository;
 import com.xjtu.spider.service.DeleteEmptyService;
 import com.xjtu.spider.service.SpiderService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,11 +51,11 @@ public class StoreController {
 
     // 数据库相关操作实例
     @Autowired
-    private TextRepository textRepository;
+    private static TextRepository textRepository;
     @Autowired
     private ImageRepository imageRepository;
-    @Autowired
-    private TermRepository termRepository;
+    //    @Autowired
+//    private TermRepository termRepository;
     @Autowired
     private ErrorTermRepository errorTermRepository;
     @Autowired
@@ -106,13 +107,20 @@ public class StoreController {
                 for (int i = 0; i < textList.size(); i++) {
                     Text text = textList.get(i);
                     try {
+                        logger.info("碎片内容为：" + text.getFragmentContent());
+                        logger.info("textRepository: " + textRepository);
                         if (!text.getFragmentContent().equals("")) {
+                            logger.info("-------------");
                             textRepository.save(text);
+//                            textRepository.saveAndFlush(text);
+                            logger.info("=============");
+                            beauTextList.add(text);
                         } else {
                             logger.info("文本内容为'',因此不进行存储。。。");
                         }
                     } catch (Exception e) {
-                        logger.info("文本内容为null,因此不进行存储。。。");
+                        logger.error(e + "");
+//                        logger.error("文本内容为null,因此不进行存储。。。" + e);
                     }
 
                 }
@@ -202,7 +210,7 @@ public class StoreController {
                         imageRepository.save(image);
                         beauImageList.add(image);
                     } catch (Exception e) {
-                        logger.info("图片内容为null，不进行存储。。。");
+                        logger.error("图片内容为null，不进行存储。。。" + e);
                     }
 
                 }
@@ -239,23 +247,31 @@ public class StoreController {
             // 判断知识点是否已经存在，防止重复爬取
             Boolean alreadyCrawler = judgeTermExistImage(termID);
             if (!alreadyCrawler) {
+
                 // 爬取知识点分面
                 List<Text> facetList = spiderService.getSingleTerm(termName, termID); // 爬虫获取所有分面数据
                 List<Text> beauFacetList = deleteEmptyService.delEmptyContentSingleTerm(facetList); // 去除内容为空的分面数据
                 logger.info("size : " + facetList.size());
                 logger.info("size : " + beauFacetList.size());
+
                 // 获取一个主题的所有分面信息集合，无重复Set集合
                 Set<String> facetSet = new HashSet<String>();
                 for (int i = 0; i < beauFacetList.size(); i++) {
                     Text f = beauFacetList.get(i);
                     facetSet.add(f.getFacetName());
                 }
+
                 // 存储分面信息
                 List<Facet> facetList1 = new ArrayList<>();
                 for (String facetName : facetSet) {
                     Facet facet = new Facet(termID, termName, facetName, "");
                     facetList1.add(facet);
+                    logger.info(facet.toString());
+//                    try {
                     facetRepository.save(facet); // 持久化到数据库
+//                    } catch (Exception e){
+//                        logger.error("存储分面出错。。。" + e);
+//                    }
                 }
 
                 responseEntity = ResponseEntity.status(HttpStatus.OK).body(facetList1);
@@ -354,17 +370,18 @@ public class StoreController {
      * @return
      */
     public Boolean judgeTermExistText(Long termID) {
-        Boolean exist = false;
         List<Text> textList = new ArrayList<>();
         try {
             textList = textRepository.findByTermID(termID);
             if (textList.size() != 0) {
-                exist = true;
+                return true;
+            } else {
+                return false;
             }
         } catch (Exception e) {
-            logger.error("获取文本表中的知识点失败。。。", e);
+            return false;
         }
-        return exist;
+
     }
 
     /**
@@ -374,17 +391,17 @@ public class StoreController {
      * @return
      */
     public Boolean judgeTermExistImage(Long termID) {
-        Boolean exist = false;
         List<Image> imageList = new ArrayList<>();
         try {
             imageList = imageRepository.findByTermID(termID);
             if (imageList.size() != 0) {
-                exist = true;
+                return true;
+            } else {
+                return false;
             }
         } catch (Exception e) {
-            logger.error("获取图片表的知识点失败。。。", e);
+            return false;
         }
-        return exist;
     }
 
     /**
@@ -394,17 +411,17 @@ public class StoreController {
      * @return
      */
     public Boolean judgeErrorTermExist(Long termID) {
-        Boolean exist = false;
         List<ErrorTerm> errorErrorTermList = new ArrayList<>();
         try {
             errorErrorTermList = errorTermRepository.findByTermID(termID);
             if (errorErrorTermList.size() != 0) {
-                exist = true;
+                return true;
+            } else {
+                return false;
             }
         } catch (Exception e) {
-            logger.error("获取课程下的知识点失败。。。", e);
+            return false;
         }
-        return exist;
     }
 
 

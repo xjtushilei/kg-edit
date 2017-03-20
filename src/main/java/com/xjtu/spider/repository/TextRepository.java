@@ -17,12 +17,9 @@ public interface TextRepository extends JpaRepository<Text, Long> {
 
     List<Text> findByTermName(String termName);
 
-    @Modifying(clearAutomatically = true)
-    @Transactional
-    @Query("delete from Text t where t.fragmentContent = ?1")
-    void deleteEmpty(String fragmentContent);
-
-    @Query("select e from Text e")
-    List<Text> findAllTerm();
+//    @Modifying(clearAutomatically = true)
+//    @Transactional
+//    @Query("delete from Text t where t.fragmentContent = ?1")
+//    void deleteEmpty(String fragmentContent);
 
 }
