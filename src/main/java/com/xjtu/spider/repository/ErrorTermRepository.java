@@ -28,7 +28,7 @@ public interface ErrorTermRepository extends JpaRepository<ErrorTerm, Long> {
 
     @Modifying(clearAutomatically = true)
     @Transactional
-    @Query("delete from ErrorTerm e where e.termName = ?1")
-    void deleteErrorTerm(String termName);
+    @Query("delete from ErrorTerm e where e.termID = ?1")
+    void deleteErrorTerm(Long termID);
 
 }

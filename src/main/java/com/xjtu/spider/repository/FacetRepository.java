@@ -10,6 +10,6 @@ import java.util.List;
  */
 public interface FacetRepository extends JpaRepository<Facet, Long> {
 
-    List<Facet> findByTermID(String termID);
+    List<Facet> findByTermID(Long termID);
 
 }

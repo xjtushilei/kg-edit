@@ -27,7 +27,7 @@ public class Config {
 
     public static String project = "";  //工程的名字，设计到api的路径
     public static String server = "localhost:8080";
-    public static String imageAPICata = "store";
+    public static String imageAPICata = "spider";
     public static String catalogTable = "datainput_catalog";
     public static String relationTable = "datainput_relation";
     public static String termTable = "datainput_term"; // term的表名
