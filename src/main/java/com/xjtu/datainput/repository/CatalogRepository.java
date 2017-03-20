@@ -16,6 +16,8 @@ public interface CatalogRepository extends JpaRepository<Catalog, Long> {
 
     List<Catalog> findByParentChapterIDAndChapterIDAndChildrenChapterID(String parentChapterID, String chapterID, String childrenChapterID);
 
+    Catalog findByCatalogID(Long catalogID);
+
 
     @Query("select c.catalogID from Catalog c where c.catalogID not in ( select r.catalogID from com.xjtu.datainput.domain.Relation r )")
     List<Long> findNoUse();

@@ -17,6 +17,8 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
 
     List<Relation> findByCatalogID(Long catalogID);
 
+    List<Relation> findByTermID(Long termID);
+
     @Query("select new com.xjtu.datainput.domain.RelationCatalog(r.relationID, r.catalogID, r.termID, r.termName, r.classID, r.className," +
             " c.parentChapterID, c.parentChapterName, c.chapterID, c.chapterName, c.childrenChapterID, c.childrenChapterName) " +
             "from Relation r ,Catalog c where  " +
