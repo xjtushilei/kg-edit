@@ -181,6 +181,7 @@ public class DatainputController {
 
         try {
             deleteReletionByCatalogID(relationID);
+
         } catch (Exception e) {
             logger.error("删除relation failed。 ", e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("修改失败！(因删除之前的出现问题！请刷新重试)" + e.toString()));
