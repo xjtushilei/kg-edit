@@ -65,7 +65,6 @@ public class SpiderController {
     private FacetRepository facetRepository;
 
 
-
     @RequestMapping(value = "/storeAllTermByClassID", method = RequestMethod.GET)
     @ApiOperation(value = "爬取课程", notes = "输入课程名，爬取该课程的所有文本和图片")
     public ResponseEntity storeAllTermByClassID(
@@ -108,8 +107,8 @@ public class SpiderController {
     }
 
 
-    @RequestMapping(value = "/storeSingleTermText", method = RequestMethod.GET)
-    @ApiOperation(value = "存储单个知识点的文本", notes = "输入单个知识点，爬取单个知识点的文本")
+    //    @RequestMapping(value = "/storeSingleTermText", method = RequestMethod.GET)
+//    @ApiOperation(value = "存储单个知识点的文本", notes = "输入单个知识点，爬取单个知识点的文本")
     public ResponseEntity storeSingleTermText(
             @RequestParam(value = "TermID", defaultValue = "1") Long termID,
             @RequestParam(value = "TermName", defaultValue = "双曲函数") String termName
@@ -144,6 +143,7 @@ public class SpiderController {
                     }
 
                 }
+                logger.info("文本个数 : " + beauTextList.size());
 
 //                textRepository.save(beauTextList); // 可以save一堆Text对象，牛逼
 //                beauTextList.iterator().forEachRemaining(t->{textRepository.save(t);}); // jdk8新特性：拉姆达表达式
@@ -204,8 +204,8 @@ public class SpiderController {
     }
 
 
-    @RequestMapping(value = "/storeSingleTermImage", method = RequestMethod.GET)
-    @ApiOperation(value = "存储单个知识点的图片", notes = "输入单个知识点，爬取单个知识点的图片")
+    //    @RequestMapping(value = "/storeSingleTermImage", method = RequestMethod.GET)
+//    @ApiOperation(value = "存储单个知识点的图片", notes = "输入单个知识点，爬取单个知识点的图片")
     public ResponseEntity storeSingleTermImage(
             @RequestParam(value = "TermID", defaultValue = "2") Long termID,
             @RequestParam(value = "TermName", defaultValue = "你好") String termName  //   人不能太帅
@@ -232,8 +232,8 @@ public class SpiderController {
                     } catch (Exception e) {
                         logger.error("图片内容为null，不进行存储。。。" + e);
                     }
-
                 }
+                logger.info("图片个数 : " + beauImageList.size());
 
                 responseEntity = ResponseEntity.status(HttpStatus.OK).body(beauImageList);
                 logger.info(termName + " 的图片爬取结束。。。");
@@ -252,8 +252,8 @@ public class SpiderController {
     }
 
 
-    @RequestMapping(value = "/storeSingleTermFacet", method = RequestMethod.GET)
-    @ApiOperation(value = "存储单个知识点的分面", notes = "输入单个知识点，爬取单个知识点的分面")
+    //    @RequestMapping(value = "/storeSingleTermFacet", method = RequestMethod.GET)
+//    @ApiOperation(value = "存储单个知识点的分面", notes = "输入单个知识点，爬取单个知识点的分面")
     public ResponseEntity storeSingleTermFacet(
             @RequestParam(value = "TermID", defaultValue = "1") Long termID,
             @RequestParam(value = "TermName", defaultValue = "双曲函数") String termName
@@ -271,8 +271,7 @@ public class SpiderController {
                 // 爬取知识点分面
                 List<Text> facetList = spiderService.getSingleTerm(termName, termID); // 爬虫获取所有分面数据
                 List<Text> beauFacetList = deleteEmptyService.delEmptyContentSingleTerm(facetList); // 去除内容为空的分面数据
-                logger.info("size : " + facetList.size());
-                logger.info("size : " + beauFacetList.size());
+                logger.info("分面个数 : " + beauFacetList.size());
 
                 // 获取一个主题的所有分面信息集合，无重复Set集合
                 Set<String> facetSet = new HashSet<String>();
@@ -287,11 +286,11 @@ public class SpiderController {
                     Facet facet = new Facet(termID, termName, facetName, "");
                     facetList1.add(facet);
                     logger.info(facet.toString());
-//                    try {
+                    try {
                     facetRepository.save(facet); // 持久化到数据库
-//                    } catch (Exception e){
-//                        logger.error("存储分面出错。。。" + e);
-//                    }
+                    } catch (Exception e) {
+                        logger.error("存储分面出错。。。" + e);
+                    }
                 }
 
                 responseEntity = ResponseEntity.status(HttpStatus.OK).body(facetList1);
@@ -310,36 +309,9 @@ public class SpiderController {
         return responseEntity;
     }
 
-//    @RequestMapping(value = "/emptyImage", method = RequestMethod.GET)
-//    @ApiOperation(value = "删除内容为空的图片", notes = "查询图片表，删除内容为空的图片")
-//    public ResponseEntity emptyImage() {
-//        ResponseEntity responseEntity = null;
-//        try {
-//            byte[] imageContent = null;
-//            imageRepository.deleteEmpty(imageContent); // 删除内容为空的元素
-//            responseEntity = ResponseEntity.status(HttpStatus.OK).body(new Success("删除空图片操作成功。。。"));
-//        } catch (Exception e) {
-//            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("删除空图片操作失败。。。"));
-//        }
-//        return responseEntity;
-//    }
-//
-//    @RequestMapping(value = "/emptyText", method = RequestMethod.GET)
-//    @ApiOperation(value = "删除内容为空的文本", notes = "查询文本表，删除内容为空的文本")
-//    public ResponseEntity emptyText() {
-//        ResponseEntity responseEntity = null;
-//        try {
-//            textRepository.deleteEmpty(""); // 删除内容为空的元素
-//            responseEntity = ResponseEntity.status(HttpStatus.OK).body(new Success("删除空文本操作成功。。。"));
-//        } catch (Exception e) {
-//            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("删除空文本操作失败。。。"));
-//        }
-//        return responseEntity;
-//    }
 
-
-    @RequestMapping(value = "/getImageAllApi", method = RequestMethod.GET)
-    @ApiOperation(value = "处理图片API", notes = "读取图片内容为api格式，并将其写到图片数据表中")
+    //    @RequestMapping(value = "/getImageAllApi", method = RequestMethod.GET)
+//    @ApiOperation(value = "处理图片API", notes = "读取图片内容为api格式，并将其写到图片数据表中")
     public ResponseEntity getImageAllApi() {
         ResponseEntity responseEntity = null;
         List<Image> imageList = new ArrayList<>();
@@ -583,7 +555,6 @@ public class SpiderController {
             return false;
         }
     }
-
 
 
 }

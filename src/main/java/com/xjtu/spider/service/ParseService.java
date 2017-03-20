@@ -413,16 +413,16 @@ public class ParseService {
     public Document getDoc(String url) {
         Document doc = null;
         try {
-            // doc = Jsoup.connect(url).get();
-            doc = Jsoup.connect(url).data("query", "Java").userAgent("Mozilla")
-                    .cookie("auth", "token").timeout(3000).post();
+            doc = Jsoup.connect(url).get();
+//            doc = Jsoup.connect(url).data("query", "Java").userAgent("Mozilla")
+//                    .cookie("auth", "token").timeout(3000).post();
         } catch (Exception e) {
             try {
                 doc = Jsoup.connect(url).get();
             } catch (IOException e1) {
-//                e1.printStackTrace();
+                logger.error("Jsoup get 方法失败：" + e);
             }
-//            e.printStackTrace();
+            logger.error("Jsoup post 方法失败：" + e);
         }
         return doc;
     }

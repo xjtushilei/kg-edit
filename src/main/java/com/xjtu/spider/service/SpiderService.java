@@ -99,7 +99,7 @@ public class SpiderService {
                 list.add(text);
             }
         } else {
-            logger.info("can't get page doc, the ParseService --> getDoc function error...");
+            logger.error("can't get page doc, the ParseService --> getDoc function error...");
         }
         return list;
     }
@@ -187,7 +187,7 @@ public class SpiderService {
                     flag = false;
                 }
             } catch (Exception e) {
-
+                logger.error("" + e);
             }
 
 

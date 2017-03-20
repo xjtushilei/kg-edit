@@ -1,6 +1,7 @@
 package com.xjtu.spider.service;
 
 /**
+ * 分面处理
  * Created by yuanhao on 2017/3/16.
  */
 public class FacetService {

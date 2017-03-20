@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * 错误知识点数据库的操作：增删改查
  * Created by yuanhao on 2017/3/16.
  */
 public interface ErrorTermRepository extends JpaRepository<ErrorTerm, Long> {

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * 文本数据库的操作：增删改查
  * Created by yuanhao on 2017/3/16.
  */
 public interface TextRepository extends JpaRepository<Text, Long> {
