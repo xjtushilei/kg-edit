@@ -14,7 +14,17 @@ import java.util.List;
  * 错误知识点数据库的操作：增删改查
  * Created by yuanhao on 2017/3/16.
  */
+@SuppressWarnings("ALL")
 public interface ErrorTermRepository extends JpaRepository<ErrorTerm, Long> {
+
+    @Query("select new com.xjtu.datainput.domain.RelationCatalog(r.relationID, r.catalogID, r.termID, r.termName, r.classID, r.className," +
+            " e.parentChapterID, e.parentChapterName, e.chapterID, e.chapterName, e.childrenChapterID, e.childrenChapterName) " +
+            "from Relation r ,ErrorTerm e " +
+            "where  " +
+            "r.catalogID=e.catalogID " +
+            "and r.termID=e.termID " +
+            "and r.classID=?1")
+    List<RelationCatalog> findErrorByClassID(String ClassID);
 
     List<ErrorTerm> findByErrorTermID(Long errorTermID);
 

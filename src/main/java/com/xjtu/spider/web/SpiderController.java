@@ -7,6 +7,7 @@ import com.xjtu.dashboard.domain.ClassStatus;
 import com.xjtu.dashboard.repository.ClassStatusRepository;
 import com.xjtu.datainput.domain.Catalog;
 import com.xjtu.datainput.domain.Relation;
+import com.xjtu.datainput.domain.RelationCatalog;
 import com.xjtu.datainput.domain.Term;
 import com.xjtu.datainput.repository.CatalogRepository;
 import com.xjtu.datainput.repository.RelationRepository;
@@ -39,13 +40,11 @@ import java.util.*;
 @RequestMapping("/spider")
 public class SpiderController {
 
-    // 打印信息
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-
     // 引用其他类
     private static SpiderService spiderService = new SpiderService();
     private static DeleteEmptyService deleteEmptyService = new DeleteEmptyService();
-
+    // 打印信息
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     // 数据库相关操作实例
     @Autowired
     private TextRepository textRepository;
@@ -357,12 +356,12 @@ public class SpiderController {
 
     @RequestMapping(value = "/getClassStatus", method = RequestMethod.GET)
     @ApiOperation(value = "读取所有门课程的爬取进度", notes = "读取系统进度表格，返回所有课程现在的爬取情况")
-    public ResponseEntity getClassStatus() {
+    public ResponseEntity getClassStatus(@RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID) {
         ResponseEntity responseEntity = null;
         List<ClassStatus> classStatusList = new ArrayList<>();
         try {
             // 找到所有正在运行爬虫的课程
-            classStatusList = classStatusRepository.findBySpider("正在执行");
+            classStatusList = classStatusRepository.findByClassid(ClassID);
         } catch (Exception e) {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("读取系统进度表格操作失败。。。"));
         }
@@ -430,8 +429,8 @@ public class SpiderController {
     @RequestMapping(value = "/updateErrorTerm", method = RequestMethod.GET)
     @ApiOperation(value = "修改错误表中的term", notes = "当在spider页面进行修改无法爬取的知识点的时候，修改error表")
     public ResponseEntity updateErrorTerm(
-            @RequestParam(value = "OldTermName", defaultValue = "你好") String oldTermName,
-            @RequestParam(value = "NewTermName", defaultValue = "你不好") String newTermName
+            @RequestParam(value = "termName", defaultValue = "你好") String oldTermName,
+            @RequestParam(value = "newTermName", defaultValue = "你不好") String newTermName
     ) {
         ResponseEntity responseEntity = null;
         try {
@@ -462,12 +461,12 @@ public class SpiderController {
 
     @RequestMapping(value = "/getErrorTermInfo", method = RequestMethod.GET)
     @ApiOperation(value = "读取错误表中的term", notes = "读取课程爬取结束后的错误term信息")
-    public ResponseEntity getErrorTerm() {
+    public ResponseEntity getErrorTerm(@RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID) {
         ResponseEntity responseEntity = null;
-        List<ErrorTerm> errorTermList = new ArrayList<>();
+        List<RelationCatalog> relationCatalog = new ArrayList<>();
         try {
-            errorTermList = errorTermRepository.findAll();
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body(errorTermList);
+            relationCatalog = errorTermRepository.findErrorByClassID(ClassID);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body(relationCatalog);
         } catch (Exception e) {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("读取错误表中的term操作失败。。。"));
         }
