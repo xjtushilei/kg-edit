@@ -43,6 +43,7 @@ public class DependencyController {
             result = dependencyRepository.findByClassID(ClassID);
         } catch (Exception e) {
             logger.error("查找所有关系 failed。 ", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("查找所有关系失败！"));
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
@@ -61,7 +62,6 @@ public class DependencyController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("两个知识点相同！不能添加！"));
         }
         try {
-
             Dependency dependency = new Dependency(ClassID, startTermName, startTermID, endTermName, endTermID, confidence);
             if (dependencyRepository.findByStartTermIDAndEndTermID(dependency.getStartTermID(), dependency.getEndTermID()).size() != 0) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("该条关系 已存在！"));
