@@ -29,34 +29,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini" ng-app="myApp" ng-controller="menu">
-<!-- 模态框（Modal）用来显示帮助信息 -->
-<div class="modal fade" id="myModal" tabindex="-222" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 50%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                </button>
-                <h4 class="modal-title" id="myModalLabel" style="color:#c12e34; font-weight:blod; ">
-                    使用帮助
-                </h4>
-            </div>
-            <div class="modal-body" id="myModalContent" style="font-family: 黑体">
-                <ol>
-                    <li>首先需要利用API进行“增加一门课程”操作，或者使用系统里目前已经增加的课程进行操作</li>
-                    <li>按照顺序，执行“录入知识点”，“数据抓取”，“依赖关系分析”，“人工校验”，“最终数据存储到图数据库”</li>
-                    <li>最后，在“图谱可视化测试”中可以看到结果</li>
-                    <li>如果想重新开始构建图谱，在“dashboard”中点击该课程的“讲此门课程的状态重置”</li>
-                </ol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal -->
-</div>
+
 <div class="wrapper">
 
     <header class="main-header">
@@ -76,8 +49,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" style="font-family: 楷体" data-toggle="modal"
-                           data-target="#myModal"><strong>使用帮助</strong></a></li>
+                    <!--<li><a href="#" style="font-family: 楷体" data-toggle="modal"-->
+                    <!--data-target="#myModal"><strong>使用帮助</strong></a></li>-->
                 </ul>
             </div>
 
@@ -97,7 +70,7 @@
                     <a href="../../index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li>
 
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa  fa-th"></i>
                         <span>录入知识点</span>
@@ -106,49 +79,50 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../input/"><i class="fa fa-edit "></i> 录入</a></li>
-                        <li><a href="../input/submit.html"><i class="fa  fa-check-square-o"></i> 录入结束</a></li>
+                        <li><a href="../input/index.html"><i class="fa fa-edit "></i> 录入</a></li>
+                        <li><a href="../input/submit.html"><i class="fa  fa-check-square-o"></i> 录入汇总</a></li>
                     </ul>
                 </li>
 
 
                 <li>
-                    <a href="../spider/">
+                    <a href="../spider/index.html">
                         <i class="fa fa-internet-explorer"></i> <span>数据抓取</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../dependency/">
+                    <a href="../dependency/index.html">
                         <i class="fa fa-cogs"></i> <span>知识点依赖关系分析</span>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="../rectification/">
+                    <a href="../rectification/index.html">
                         <i class="fa  fa-user"></i> <span>人工检验数据</span>
                     </a>
                 </li>
-                <!--         <li class="treeview active">
-      <a href="#">
-        <i class="fa  fa-user"></i>
-        <span>人工检验数据</span>
-        <span class="pull-right-container">
-          <i class="fa fa-angle-left pull-right"></i>
-        </span>
-      </a>
-      <ul class="treeview-menu">
-        <li class="active"><a href=""><i class="fa fa-circle-o"></i> 知识点的分面属性和图片校验</a></li>
-        <li><a href="dependency.html"><i class="fa fa-circle-o"></i> 知识点间的关系校验</a></li>
-      </ul>
-    </li> -->
+                <!--
+          <li class="treeview">
+            <a href="#">
+              <i class="fa  fa-user"></i>
+              <span>人工检验数据</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li><a href="../rectification/"><i class="fa fa-circle-o"></i> 知识点的分面属性和图片校验</a></li>
+              <li><a href="../rectification/dependency.html"><i class="fa fa-circle-o"></i> 知识点间的关系校验</a></li>
+            </ul>
+          </li> -->
 
+                <!--<li>-->
+                <!--<a href="../store/">-->
+                <!--<i class="fa fa-database"></i> <span>最终数据存储到图数据库</span>-->
+                <!--</a>-->
+                <!--</li>-->
                 <li>
-                    <a href="../store/">
-                        <i class="fa fa-database"></i> <span>最终数据存储到图数据库</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="../visualization/">
-                        <i class="fa  fa-chrome"></i> <span>图谱可视化测试</span>
+                    <a href="../visualization/index.html">
+                        <i class="fa  fa-chrome"></i> <span>知识图谱可视化预览</span>
                     </a>
                 </li>
 
@@ -177,97 +151,115 @@
         <section class="content">
 
             <br>
+            <div class="row">
+                <div class="col-sm-3 ">
 
-            <div class="col-sm-3 ">
-
-                <div id="terms">
-                    <div style="font-size: 15px;margin-bottom:5px">
-                        <span class="label label-success">1 . 请选择知识点</span>
-                    </div>
-                    <div style="margin-bottom:10px">
-                            <span>当前选中知识点 :
+                    <div id="terms">
+                        <div style="font-size: 15px;margin-bottom:5px">
+                            <span class="label label-success">1 . 请选择知识点</span>
+                        </div>
+                        <div style="margin-bottom:10px">
+                            当前选中知识点 :
                                 <span ng-bind='nowTerm.termName' style="color:red"> </span>
-                    </div>
-                    <div class="">
-                        <ul class="list-group">
-                            <a href=""
-                               ng-class="{'list-group-item  list-group-item-info':($index)%2===0 ,'list-group-item':($index)%2!=0}"
-                               ng-repeat="x in classTermList"
-                               ng-bind="x.termName" ng-click="getClassFacetList(x)"> </a>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-sm-9" id="checkterms">
-                <div><strong><b class="label label-success"> 2 . 请选择分面属性 ：</b></strong>
-                    <span>当前选中分面属性 : </span><span ng-bind='nowFacet' style="color:red"> </span></div>
-                <br>
-                <div class="row">
-                    <div class="col-sm-4" ng-repeat="x in facets" style="margin-bottom: 8px">
-                        <a ng-bind="x" class="label label-primary" style="font-size: 15px"
-                           ng-click="getFacetFragmentList(x)"></a>
-                        <span type="button" class="btn btn-default btn-xs" data-toggle="modal"
-                              data-target="#updatefenmian"><i class="fa fa-close">修改</i></span>
-                        <span type="button" class="btn btn-default btn-xs" ng-click="deleteFacetfun(x)"><i
-                                class="fa fa-close">删除</i></span>
-                    </div>
-                    <div class="col-sm-3">
-                        <button class="label label-default glyphicon glyphicon-plus" data-toggle="modal"
-                                data-target="#myModaladdfenmian">增加分面属性
-                        </button>
-                    </div>
-                </div>
-
-                <div id="fragmentDIV">
-                    <div><strong><b class="label label-success"> 3 . 请校验具体知识和图片 ：</b></strong>
-                        <button class="label label-default glyphicon glyphicon-plus"
-                                data-toggle="modal" data-target="#myModaladdtext">增加文本
-                        </button>
-                        &nbsp;&nbsp;
-                        <button class="label label-default glyphicon glyphicon-plus" data-toggle="modal"
-                                data-target="#myModaladdphoto">增加图片
-                        </button>
-                    </div>
-                    <br>
-                    <div class="col-sm-4 " ng-repeat="x in textOfFacetFragment" repeat-finish="renderFinish()">
-                        <div>
-                            <div class=" box box-primary">
-                                <div class="box-body ">
-                                    <div class="textclass" ng-bind="x.fragmentContent"></div>
-                                </div>
-                                <div class="box-footer">
-                                    <button type="button" class="pull-right btn btn-default btn-xs"
-                                            ng-click="deleteText(x.fragmentID)"><i class="fa fa-close">删除</i></button>
-                                    <button type="button" class="pull-right btn btn-default btn-xs"
-                                            ng-click="changeText(x.fragmentID,x.fragmentContent)"><i
-                                            class="fa fa-gears">查看或修改</i></button>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="">
+                            <ul class="list-group">
+                                <a href=""
+                                   ng-class="{'list-group-item  list-group-item-info':($index)%2===0 ,'list-group-item':($index)%2!=0}"
+                                   ng-repeat="x in classTermList"
+                                   ng-bind="x.termName" ng-click="getClassFacetList(x)"> </a>
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-sm-4 " ng-repeat="x in imageOfFacetFragment" repeat-finish="renderFinish()">
+                </div>
+
+
+                <div class="col-sm-9" id="checkterms">
+                    <div><strong><b class="label label-success"> 2 . 请选择分面属性 ：</b></strong>
+                        <span>当前选中分面属性 : </span><span ng-bind='nowFacet' style="color:red"> </span></div>
+                    <br>
+
+                    <div class="row" style="margin-bottom: 30px">
+                        <div class="col-sm-4" ng-repeat="x in facets" style="margin-bottom: 8px">
+                            <a ng-bind="x" class="label label-primary" style="font-size: 15px"
+                               ng-click="getFacetFragmentList(x)"></a>
+                            <span type="button" class="btn btn-default btn-xs" data-toggle="modal"
+                                  data-target="#updatefenmianModel"><i class="fa fa-close">修改</i></span>
+                            <span type="button" class="btn btn-default btn-xs" ng-click="deleteFacetfun(x)"><i
+                                    class="fa fa-close">删除</i></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="label label-default glyphicon glyphicon-plus" data-toggle="modal"
+                                    data-target="#myModaladdfenmian">增加分面属性
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <div id="fragmentDIV">
                         <div>
-                            <div class=" box box-primary">
-                                <div class="box-body ">
-                                    <div>
-                                        <img class="img-responsive" src="{{x.imageAPI}}" alt="{{x.imageID}}">
+                            <strong><b class="label label-success"> 3 . 请校验具体知识和图片 ：</b></strong>
+                            <button class="label label-default glyphicon glyphicon-plus" data-toggle="modal"
+                                    data-target="#myModaladdtext">增加文本
+                            </button>
+                            &nbsp;&nbsp;
+                            <button class="label label-default glyphicon glyphicon-plus" data-toggle="modal"
+                                    data-target="#myModaladdphoto">增加图片
+                            </button>
+                        </div>
+                        <br>
+                        <div class="col-sm-4 " ng-repeat="x in textOfFacetFragment" repeat-finish="renderFinish()">
+                            <div>
+                                <div class=" box box-primary">
+                                    <div class="box-body ">
+                                        <div class="textclass" ng-bind="x.fragmentContent"></div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <button type="button" class="pull-right btn btn-default btn-xs"
+                                                ng-click="deleteText(x.fragmentID)"><i class="fa fa-close">删除</i>
+                                        </button>
+                                        <button type="button" class="pull-right btn btn-default btn-xs"
+                                                ng-click="changeText(x.fragmentID,x.fragmentContent)"><i
+                                                class="fa fa-gears">查看或修改</i></button>
                                     </div>
                                 </div>
-                                <div class="box-footer">
-                                    <button type="button" class="pull-right btn btn-default btn-xs"
-                                            ng-click="deleteImage(x.imageID)"><i class="fa fa-close">删除</i></button>
-                                    <button type="button" class="pull-right btn btn-default btn-xs"
-                                            ng-click="lookImage(x.imageAPI,x.imageID)"><i class="fa fa-gears">查看大图</i>
-                                    </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 " ng-repeat="x in imageOfFacetFragment" repeat-finish="renderFinish()">
+                            <div>
+                                <div class=" box box-primary">
+                                    <div class="box-body ">
+                                        <div>
+                                            <img class="img-responsive" src="{{x.imageAPI}}" alt="{{x.imageID}}">
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <button type="button" class="pull-right btn btn-default btn-xs"
+                                                ng-click="deleteImage(x.imageID)"><i class="fa fa-close">删除</i></button>
+                                        <button type="button" class="pull-right btn btn-default btn-xs"
+                                                ng-click="lookImage(x.imageAPI,x.imageID)"><i
+                                                class="fa fa-gears">查看大图</i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+        </section>
+        <!-- /.content -->
     </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>Version</b> 0.0.1
+        </div>
+        <strong>Copyright &copy; 2016-2019 <a href="http://labs.xjtudlc.com/labs/index.html">陕西省天地网技术重点实验室</a>.</strong>
+        All rights reserved.
+    </footer>
+
     <!-- 模态框（Modal）用来显示图片 -->
     <div class="modal fade" id="myModalImage" tabindex="3" role="dialog" aria-labelledby="myModalImageLabel"
          aria-hidden="true"
@@ -293,9 +285,9 @@
         </div>
     </div>
     <!-- 模态框（Modal）用来修改分面属性-->
-    <div class="modal fade" id="updatefenmian" tabindex="-1" role="dialog" aria-labelledby="updatefenmianLabel"
+    <div class="modal fade" id="updatefenmianModel" tabindex="-1" role="dialog" aria-labelledby="updatefenmianLabel"
          aria-hidden="true">
-        <div class="modal-dialog" style="width: 60%">
+        <div class="modal-dialog" style="width: 50%">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -491,23 +483,11 @@
         </div>
     </div>
 
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 0.0.1
-    </div>
-    <strong>Copyright &copy; 2016-2019 <a href="http://labs.xjtudlc.com/labs/index.html">陕西省天地网技术重点实验室</a>.</strong> All
-    rights reserved.
-</footer>
 
-
-<!-- /.control-sidebar -->
-<!-- Add the sidebar's background. This div must be placed
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
    immediately after the control sidebar -->
-<div class="control-sidebar-bg"></div>
+    <div class="control-sidebar-bg"></div>
 </div>
 <!-- ./wrapper -->
 
@@ -527,9 +507,6 @@
 <script src="http://cdn.bootcss.com/angular-ui-bootstrap/2.1.3/ui-bootstrap.js"></script>
 <!--  jquery.form.js-->
 <script src="http://cdn.bootcss.com/jquery.form/3.50/jquery.form.js"></script>
-<!-- Bootstrap-WYSIHTML5 编辑器 -->
-<!-- <script src="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> -->
-<!-- <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> -->
 <!-- 本页面的js -->
 <script src="../../dist/js/shileiUtils.js"></script>
 <script src="index.js"></script>

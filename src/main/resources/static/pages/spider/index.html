@@ -27,36 +27,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini">
-<!-- 模态框（Modal）用来显示帮助信息 -->
-<div class="modal fade" id="myModal" tabindex="-222" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width: 50%">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                </button>
-                <h4 class="modal-title" id="myModalLabel" style="color:#c12e34; font-weight:blod; ">
-                    使用帮助
-                </h4>
-            </div>
-            <div class="modal-body" id="myModalContent" style="font-family: 黑体">
-                <ol>
-                    <li>首先需要利用API进行“增加一门课程”操作，或者使用系统里目前已经增加的课程进行操作</li>
-                    <li>按照顺序，执行“录入知识点”，“数据抓取”，“依赖关系分析”，“人工校验”，“最终数据存储到图数据库”</li>
-                    <li>最后，在“图谱可视化测试”中可以看到结果</li>
-                    <li>如果想重新开始构建图谱，在“dashboard”中点击该课程的“讲此门课程的状态重置”</li>
-                </ol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal -->
-</div>
+
 <div class="wrapper">
 
     <header class="main-header">
@@ -76,8 +48,8 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#" style="font-family: 楷体" data-toggle="modal"
-                           data-target="#myModal"><strong>使用帮助</strong></a></li>
+                    <!--<li><a href="#" style="font-family: 楷体" data-toggle="modal"-->
+                    <!--data-target="#myModal"><strong>使用帮助</strong></a></li>-->
                 </ul>
             </div>
 
@@ -97,7 +69,7 @@
                     <a href="../../index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                 </li>
 
-                <li class="treeview active">
+                <li class="treeview ">
                     <a href="#">
                         <i class="fa  fa-th"></i>
                         <span>录入知识点</span>
@@ -106,29 +78,29 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="../input/"><i class="fa fa-edit "></i> 录入</a></li>
-                        <li><a href="../input/submit.html"><i class="fa  fa-check-square-o"></i> 录入结束</a></li>
+                        <li><a href="../input/index.html"><i class="fa fa-edit "></i> 录入</a></li>
+                        <li><a href="../input/submit.html"><i class="fa  fa-check-square-o"></i> 录入汇总</a></li>
                     </ul>
                 </li>
 
 
                 <li class="active">
-                    <a href="">
+                    <a href="../spider/index.html">
                         <i class="fa fa-internet-explorer"></i> <span>数据抓取</span>
                     </a>
                 </li>
-
                 <li>
-                    <a href="../dependency/">
+                    <a href="../dependency/index.html">
                         <i class="fa fa-cogs"></i> <span>知识点依赖关系分析</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../rectification/">
+                    <a href="../rectification/index.html">
                         <i class="fa  fa-user"></i> <span>人工检验数据</span>
                     </a>
                 </li>
-                <!--         <li class="treeview">
+                <!--
+              <li class="treeview">
                 <a href="#">
                   <i class="fa  fa-user"></i>
                   <span>人工检验数据</span>
@@ -142,14 +114,14 @@
                 </ul>
               </li> -->
 
+                <!--<li>-->
+                <!--<a href="../store/">-->
+                <!--<i class="fa fa-database"></i> <span>最终数据存储到图数据库</span>-->
+                <!--</a>-->
+                <!--</li>-->
                 <li>
-                    <a href="../store/">
-                        <i class="fa fa-database"></i> <span>最终数据存储到图数据库</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="../visualization/">
-                        <i class="fa  fa-chrome"></i> <span>图谱可视化测试</span>
+                    <a href="../visualization/index.html">
+                        <i class="fa  fa-chrome"></i> <span>知识图谱可视化预览</span>
                     </a>
                 </li>
 

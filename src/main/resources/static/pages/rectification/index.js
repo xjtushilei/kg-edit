@@ -1,11 +1,3 @@
-// 初始化 编辑器
-// var editor
-// $(function () {
-//     //bootstrap WYSIHTML5 - text editor
-//     editor = new wysihtml5.Editor("textarea", { });
-
-// });
-
 
 var app = angular.module('myApp', [
     'ui.bootstrap'
