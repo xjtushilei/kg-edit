@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * Created by yuanhao on 2017/3/15.
  */
+@Service
 public class ParseService {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());

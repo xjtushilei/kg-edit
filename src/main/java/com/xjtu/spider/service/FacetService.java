@@ -1,9 +1,12 @@
 package com.xjtu.spider.service;
 
+import org.springframework.stereotype.Service;
+
 /**
  * 分面处理
  * Created by yuanhao on 2017/3/16.
  */
+@Service
 public class FacetService {
 
     /**

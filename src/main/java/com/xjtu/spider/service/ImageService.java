@@ -1,5 +1,7 @@
 package com.xjtu.spider.service;
 
+import org.springframework.stereotype.Service;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -8,6 +10,7 @@ import java.net.URL;
  * 下载图片
  * Created by yuanhao on 2017/3/16.
  */
+@Service
 public class ImageService {
 
     public static void main(String[] args) {

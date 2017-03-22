@@ -4,6 +4,7 @@ import com.xjtu.spider.domain.Image;
 import com.xjtu.spider.domain.Text;
 import org.jsoup.nodes.Document;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -23,6 +24,7 @@ import java.util.List;
  * <p>
  * Created by yuanhao on 2017/3/16.
  */
+@Service
 public class SpiderService {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
