@@ -18,7 +18,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     List<Image> findByTermID(Long termID);
 
-    List<Image> findByTermName(String termName);
+    List<Image> findByTermIDAndFacetName(Long termID, String facetName);
 
     @Modifying(clearAutomatically = true)
     @Transactional
@@ -29,5 +29,20 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Transactional
     @Query("update Image i set i.imageAPI = ?1 where i.imageID = ?2")
     void updateByImageID(String api, Long imageID);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("delete from Image i where i.termID = ?1 and i.imageID = ?2")
+    void deleteByTermIDAndImageID(Long termID, Long imageID);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("delete from Image i where i.termID = ?1 and i.facetName = ?2")
+    void deleteByTermIDAndFacetName(Long termID, String facetName);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("update Image i set facetName = ?3 where i.termID = ?1 and i.facetName = ?2")
+    void updateByTermIDAndFacetName(Long termID, String oldFacetName, String newFacetName);
 
 }

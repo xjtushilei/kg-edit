@@ -16,11 +16,26 @@ public interface TextRepository extends JpaRepository<Text, Long> {
 
     List<Text> findByTermID(Long termID);
 
-    List<Text> findByTermName(String termName);
+    List<Text> findByTermIDAndFacetName(Long termID, String facetName);
 
-//    @Modifying(clearAutomatically = true)
-//    @Transactional
-//    @Query("delete from Text t where t.fragmentContent = ?1")
-//    void deleteEmpty(String fragmentContent);
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("delete from Text t where t.termID = ?1 and t.fragmentID = ?2")
+    void deleteByTermIDAndFragmentID(Long termID, Long fragmentID);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("delete from Text t where t.termID = ?1 and t.facetName = ?2")
+    void deleteByTermIDAndFacetName(Long termID, String facetName);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("update Text t set fragmentContent = ?3 where t.termID = ?1 and t.fragmentID = ?2")
+    void updateByTermIDAndFragmentIDAndFragmentContent(Long termID, Long fragmentID, String fragmentContent);
+
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query("update Text t set facetName = ?3 where t.termID = ?1 and t.facetName = ?2")
+    void updateByTermIDAndFacetName(Long termID, String oldFacetName, String newFacetName);
 
 }
