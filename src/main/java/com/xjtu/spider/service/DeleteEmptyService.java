@@ -3,6 +3,7 @@ package com.xjtu.spider.service;
 import com.xjtu.spider.domain.Image;
 import com.xjtu.spider.domain.Text;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  * <p>
  * Created by yuanhao on 2017/3/16.
  */
+@Service
 public class DeleteEmptyService {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());

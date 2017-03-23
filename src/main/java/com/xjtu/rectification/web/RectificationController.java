@@ -34,7 +34,9 @@ import java.util.*;
 public class RectificationController {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
-    private final ParseService parseService = new ParseService();
+
+    @Autowired
+    private ParseService parseService;
 
     @Autowired
     private TermRepository termRepository;
@@ -147,7 +149,7 @@ public class RectificationController {
         return ResponseEntity.status(HttpStatus.OK).body(new Success("删除知识点某分面 成功！"));
     }
 
-    @RequestMapping(value = "/updateText", method = RequestMethod.GET)
+    @RequestMapping(value = "/updateText", method = RequestMethod.POST)
     public ResponseEntity updateText(
             @RequestParam(value = "TermID", defaultValue = "23") Long TermID,
             @RequestParam(value = "FragmentID", defaultValue = "43") Long FragmentID,
@@ -181,21 +183,22 @@ public class RectificationController {
         return ResponseEntity.status(HttpStatus.OK).body(new Success("更新知识点某分面 成功！"));
     }
 
-    @RequestMapping(value = "/addText", method = RequestMethod.GET)
+    @RequestMapping(value = "/addText", method = RequestMethod.POST)
     public ResponseEntity addText(
             @RequestParam(value = "TermID", defaultValue = "23") Long TermID,
             @RequestParam(value = "FacetName", defaultValue = "摘要") String FacetName,
-            @RequestParam(value = "FragmentContent", defaultValue = "添加之后的文本") String FragmentContent
+            @RequestParam(value = "FragmentContent", defaultValue = "添加之后的文本") String FragmentContent,
+            @RequestParam(value = "TermName", defaultValue = "TermName") String TermName
     ) {
 
         Text text = new Text();
         try {
             text.setFragmentContent(FragmentContent);
-            text.setFragmentUrl(textRepository.findByTermID(TermID).get(0).getFragmentUrl());
+            text.setFragmentUrl("null");
             text.setFragmentPostTime(parseService.getScratchTime());
             text.setFragmentScratchTime(parseService.getScratchTime());
             text.setTermID(TermID);
-            text.setTermName(textRepository.findByTermID(TermID).get(0).getTermName());
+            text.setTermName(TermName);
             text.setFacetName(FacetName);
             textRepository.save(text);
         } catch (Exception e) {
@@ -231,6 +234,7 @@ public class RectificationController {
     public ResponseEntity addImage(
             @RequestParam(value = "TermID", defaultValue = "23") Long TermID,
             @RequestParam(value = "FacetName", defaultValue = "摘要") String FacetName,
+            @RequestParam(value = "TermName", defaultValue = "TermName") String TermName,
             @RequestParam("file") MultipartFile file
     ) {
 
@@ -240,7 +244,7 @@ public class RectificationController {
             image.setImageUrl("http://image.baidu.com/" + file.getOriginalFilename());
             image.setImageScratchTime(parseService.getScratchTime());
             image.setTermID(TermID);
-            image.setTermName(imageRepository.findByTermID(TermID).get(0).getTermName());
+            image.setTermName(TermName);
             image.setFacetName(FacetName);
             image.setImageAPI("");
             imageRepository.save(image);

@@ -23,6 +23,7 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -337,7 +338,7 @@ public class SpiderController {
     @RequestMapping(value = "/getImage", method = RequestMethod.GET)
     @ApiOperation(value = "访问图片的API", notes = "输入图片ID，返回对应图片的API")
     public ResponseEntity getImage(
-            @RequestParam(value = "ImageID", defaultValue = "1") Long imageID
+            @RequestParam(value = "imageID", defaultValue = "1") Long imageID
     ) {
         ResponseEntity responseEntity = null;
         Image image = new Image();
@@ -346,9 +347,9 @@ public class SpiderController {
             String fileName = image.getImageUrl().substring(image.getImageUrl().lastIndexOf("/") + 1); // 图片文件名字取链接最后一部分
             Object imageCount = image.getImageContent(); // 图片二进制流数据
             responseEntity = ResponseEntity.status(HttpStatus.OK).header("Content-disposition", "attachment; "
-                    + "filename=" + fileName).body(imageCount);
+                    + "filename=" + fileName).contentType(MediaType.APPLICATION_OCTET_STREAM).body(imageCount);
         } catch (Exception e) {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("获取图片操作失败。。。"));
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("获 取图片操作失败。。。"));
         }
         return responseEntity;
     }
