@@ -322,7 +322,7 @@ public class SpiderController {
             // 更新图片的API字段
             for (int i = 0; i < imageList.size(); i++) {
                 Long imageID = imageList.get(i).getImageID();
-                String api = "http://" + Config.server + "/" + Config.project + "/" + Config.imageAPICata + "/getImage?imageID=" + imageID;
+                String api = Config.project + "/" + Config.imageAPICata + "/getImage?imageID=" + imageID;
                 imageRepository.updateByImageID(api, imageID); // 根据imageID更新imageAPI
             }
 

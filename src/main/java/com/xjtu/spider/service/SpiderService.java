@@ -4,6 +4,7 @@ import com.xjtu.spider.domain.Image;
 import com.xjtu.spider.domain.Text;
 import org.jsoup.nodes.Document;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -28,9 +29,13 @@ import java.util.List;
 public class SpiderService {
 
     private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     private ParseService parseFragmentService = new ParseService();
+
     private FacetService facetAlgoService = new FacetService();
 
+    private ImageService imageService = new ImageService();
 
     public static void main(String[] args) {
         SpiderService spiderService = new SpiderService();
@@ -126,6 +131,7 @@ public class SpiderService {
         // 解析term百科页面，得到分面列表
         String urlBaike = "http://baike.baidu.com/item/" + termNew;
         List<Image> list = new ArrayList<>();
+        System.out.println(parseFragmentService);
         Document docBaike = parseFragmentService.getDoc(urlBaike);
         LinkedList<String> facetList = parseFragmentService.getFirstTitle(docBaike); // 按照一级标题存储
         facetList.add("摘要");
@@ -150,7 +156,7 @@ public class SpiderService {
             for (int j = 0; j < facetImageList.size(); j++) {
                 logger.info("图片链接：" + facetImageList.get(j));
                 // 内容为InputStream流，对应数据库字段属性为Blob
-                byte[] imageContent = ImageService.getImageFromNetByUrl(facetImageList.get(j)); // 下载图片url为输入流
+                byte[] imageContent = imageService.getImageFromNetByUrl(facetImageList.get(j)); // 下载图片url为输入流
                 String imageUrl = facetImageList.get(j);
                 String imageScratchTime = parseFragmentService.getScratchTime();
                 String termName = term;
