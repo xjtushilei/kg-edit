@@ -130,7 +130,7 @@ app.controller('menu', function ($scope, $http) {
             data: {},
         })
             .done(function (data) {
-                $("#myModalLabel").text()
+                $("#myModalLabel").text("成功")
                 $("#myModalContent").html(data.success);
                 $('#myModaladd').modal('hide');
                 $('#myModal').modal('show');

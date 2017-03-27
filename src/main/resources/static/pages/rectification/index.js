@@ -1,4 +1,3 @@
-
 var app = angular.module('myApp', [
     'ui.bootstrap'
 ]);
@@ -26,6 +25,48 @@ app.controller('menu', function ($scope, $http) {
     termsDOM.hide()
     checktermsDOM.hide()
     fragmentDOM.hide()
+
+
+    $scope.getSpiderStatus = function () {
+
+        $.ajax({
+            url: ip + "/spider/getClassStatus?temp=" + new Date().getTime() + "&ClassID=" + getCookie("nowclassid"),
+            // url:"a.json",
+            type: 'get',
+            dataType: 'json',
+        })
+            .done(function (json) {
+                // console.log(json)
+                console.log("加载课程列表 success");
+                ///计算两个整数的百分比值
+                function GetPercent(num, total) {
+                    num = parseFloat(num);
+                    total = parseFloat(total);
+                    if (isNaN(num) || isNaN(total)) {
+                        return "-";
+                    }
+                    return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00 + "%");
+                }
+
+                row = json[0];
+                nowPercent = GetPercent(row.alreadyTermNum, row.termSum);
+                console.log(nowPercent)
+                if (nowPercent != "100%") {
+                    $('#myModalInfoLabel').html("目前数据抓取仅完成<span style='color:blue'>" + nowPercent + "</span> <br>" +
+                        "请在 <span style='color:blue'>数据抓取</span> 页面点击 <span style='color:blue'>开始爬取</span><br>" +
+                        "如果确定不能爬取，请在该页面人工增加数据！")
+                    $('#myModalInfo').modal('toggle')
+                }
+
+            })
+            .fail(function () {
+                console.log("error");
+            })
+            .always(function (json) {
+                console.log("complete");
+            });
+    }
+    $scope.getSpiderStatus();
 
     $scope.getClassList = function () {
         $http.get(ip + "/rectification/getClassTerm?temp=" + new Date().getTime() + "&ClassID=" + getCookie("nowclassid")).success(
@@ -63,7 +104,7 @@ app.controller('menu', function ($scope, $http) {
     $scope.renderFinish = function () {
         // console.log('渲染完之后的操作')
         $(".textclass").slimscroll({
-            height: '100px',
+            height: '150px',
             size: '4px',
             alwaysVisible: true,
             railOpacity: 0.1

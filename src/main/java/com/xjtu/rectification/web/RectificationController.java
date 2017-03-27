@@ -12,7 +12,6 @@ import com.xjtu.spider.repository.FacetRepository;
 import com.xjtu.spider.repository.ImageRepository;
 import com.xjtu.spider.repository.TextRepository;
 import com.xjtu.spider.service.ParseService;
-import com.xjtu.spider.web.SpiderController;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -218,7 +217,7 @@ public class RectificationController {
         Facet facet = new Facet();
         try {
             facet.setTermID(TermID);
-            facet.setTermName(facetRepository.findByTermID(TermID).get(0).getTermName());
+            facet.setTermName(termRepository.findByTermID(TermID).getTermName());
             facet.setFacetName(FacetName);
             facet.setNote("");
             facetRepository.save(facet);

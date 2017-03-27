@@ -15,4 +15,7 @@ public interface DependencyRepository extends JpaRepository<Dependency, Long> {
     List<Dependency> findByClassID(String ClassID);
 
     List<Dependency> findByStartTermIDAndEndTermID(Long startTermID, Long endTermID);
+
+    List<Dependency> findByStartTermIDOrEndTermID(Long startTermID, Long endTermID);
+
 }

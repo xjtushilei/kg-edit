@@ -363,7 +363,7 @@ app.controller('menu', function ($scope, $http) {
 });
 
 
-// window.setInterval(getSpiderStatus, 5000);
+window.setInterval(getSpiderStatus, 5000);
 //得到错误的知识点
 function getErrorTerm() {
     $.get(ip + "/spider/getErrorTermInfo?temp=" + new Date().getTime() + "&ClassID=" + getCookie("nowclassid")).success(

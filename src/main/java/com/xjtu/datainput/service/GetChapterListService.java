@@ -5,13 +5,8 @@ import com.xjtu.common.Config;
 import com.xjtu.datainput.domain.CatalogListLevel1;
 import com.xjtu.datainput.domain.CatalogListLevel2;
 import com.xjtu.datainput.domain.CatalogListLevel3;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,6 +22,10 @@ import java.util.Map;
 public class GetChapterListService {
 
 
+    public static void main(String[] args) {
+        new GetChapterListService().get("4800FD2B-C9DA-4994-AF88-95DE7C2EF980");
+    }
+
     public ArrayList<CatalogListLevel1> get(String CourseID) {
 
         /**
@@ -36,37 +35,38 @@ public class GetChapterListService {
         Map<String, Object> map = new HashMap<>();
         map.put("CourseID", CourseID);
         String json = sendGet(Config.MOOC2U_API_GET_COURSE + "?CourseID=" + CourseID);
-        //        System.out.println(json);
+        //                System.out.println(json);
 
 
         /**
          * 解析json
          */
-        List<Map<String, Object>> Catalogs = JsonPath.read(json, "$.Catalogs[*]");
+        List<Map<String, Object>> Catalogs = JsonPath.read(json, "$.Children[*]");
 
+        //        System.out.println(Catalogs);
         ArrayList<CatalogListLevel1> result = new ArrayList<>();
 
         for (Map<String, Object> string : Catalogs) {
             String ParentChapterName = JsonPath.read(string, "$.Name").toString();
-            String ParentChapterID = JsonPath.read(string, "$.id").toString();
+            String ParentChapterID = JsonPath.read(string, "$.ID").toString();
             if (ParentChapterName.equals("期末测试")) continue;
             //			System.out.println(ParentChapterID+" : "+ParentChapterName);
 
             CatalogListLevel1 level1 = new CatalogListLevel1(ParentChapterID, null, ParentChapterName);
             ArrayList<CatalogListLevel2> level2list = new ArrayList<>();
 
-            List<Map<String, Object>> chapter = JsonPath.read(string, "$.children[*]");
+            List<Map<String, Object>> chapter = JsonPath.read(string, "$.Children[*]");
             for (Map<String, Object> string2 : chapter) {
 
                 String ChapterName = JsonPath.read(string2, "$.Name").toString();
-                String ChapterID = JsonPath.read(string2, "$.KnowledgeID").toString();
-                //				System.out.println(ChapterID+" : "+ChapterName);
+                String ChapterID = JsonPath.read(string2, "$.ID").toString();
+                //                				System.out.println(ChapterID+" : "+ChapterName);
 
                 ArrayList<CatalogListLevel3> level3list = new ArrayList<>();
-                List<Map<String, Object>> ChildrenChapter = JsonPath.read(string2, "$.children[*]");
+                List<Map<String, Object>> ChildrenChapter = JsonPath.read(string2, "$.Children[*]");
                 for (Map<String, Object> string3 : ChildrenChapter) {
                     String ChildrenChapterName = JsonPath.read(string3, "$.Name").toString();
-                    String ChildrenChapterID = JsonPath.read(string3, "$.id").toString();
+                    String ChildrenChapterID = JsonPath.read(string3, "$.ID").toString();
                     //					System.out.println(ChildrenChapterID+" : "+ChildrenChapterName);
                     if (isChapter(ChildrenChapterName)) {
                         level3list.add(new CatalogListLevel3(ChildrenChapterID, ChildrenChapterName));

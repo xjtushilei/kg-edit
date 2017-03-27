@@ -14,8 +14,8 @@ app.controller('menu', function ($scope, $http) {
 
 
     $scope.setClassCookie = function (nowclassid, classname) {
-        setCookie("nowclassid", nowclassid, "d999")
-        setCookie("nowclassname", classname, "d999")
+        setCookie("nowclassid", nowclassid, "d9999")
+        setCookie("nowclassname", classname, "d9999")
         $("#myModal1Label").text("提示")
         $("#myModal1Content").html('</br> 您已经选择<span class="badge" style="background-color:green;font-size: 18px">' + classname + '</span>  作为您之后的操作课程！</br></br>请开始 <b>录入知识点</b>');
         $('#myModal1').modal('show');

@@ -1,15 +1,15 @@
 ﻿var api_host = ip;
 
-function getclass(domain) {
+function getclass(ClassID, ClassName) {
     var dom = document.getElementById("kg");
     var myChart = echarts.init(dom);
     myChart.showLoading();
-    var url = "http://" + api_host + "/KG/visualization/getall/get?temp=" + new Date().getTime() + "&domain=";
-    $.getJSON(url + domain, function (json) {
+    var url = api_host + "/visualization/get?temp=" + new Date().getTime() + "&ClassID=" + ClassID;
+    $.getJSON(url, function (json) {
         myChart.hideLoading();
         myChart.setOption(option = {
             title: {
-                text: domain,
+                text: ClassName,
             },
             animationDurationUpdate: 100,
             series: [
@@ -23,7 +23,7 @@ function getclass(domain) {
                             id: node.id,
                             name: node.label,
                             value: node.id,
-                            symbolSize: node.size * 0.9 + 9,
+                            symbolSize: node.size * 0.9 + 19,
 
                             itemStyle: {
                                 normal: {
@@ -69,7 +69,8 @@ function getclass(domain) {
         }, true);
         myChart.on('click', function (node) {
             if (node.dataType == 'node') {
-                gettopic(node.value, domain)
+                //node.value is id
+                getDependency(node.value, node.name)
             }
 
         });
@@ -78,18 +79,18 @@ function getclass(domain) {
     ;
 }
 
-function getfacet(q, domain) {
+function getfacet(TermID, TermName) {
     var dom = document.getElementById("kg");
     var myChart = echarts.init(dom);
 
-    var url = "http://" + api_host + "/KG/visualization/getfacet/get?temp=" + new Date().getTime() + "&q=" + q + "&domain=" + domain;
+    var url = api_host + "/visualization/getfacet?temp=" + new Date().getTime() + "&TermID=" + TermID + "&TermName=" + TermName;
 
     $.getJSON(decodeURI(url), function (json) {
 
         myChart.hideLoading();
         myChart.setOption(option = {
             title: {
-                text: "",
+                text: TermName,
             },
             animationDurationUpdate: 150,
 
@@ -104,7 +105,7 @@ function getfacet(q, domain) {
                             id: node.id,
                             name: node.label,
                             value: node.id,
-                            symbolSize: (node.size + 1) * 3,
+                            symbolSize: (node.size + 1) * 3 + 9,
                             itemStyle: {
                                 normal: {
                                     color: node.color
@@ -151,7 +152,7 @@ function getfacet(q, domain) {
 
         myChart.on('click', function (node) {
             if (node.dataType == 'node') {
-                if (node.value == q) {
+                if (node.value == TermID) {
 
                 }
                 else if (node.value != null) {
@@ -171,7 +172,7 @@ function getfacet(q, domain) {
                         return value;
                     }
 
-                    var facet = "http://" + api_host + "/KG/visualization/getdetailed/get?temp=" + new Date().getTime() + "&id=" + q + "&facet=" + node.value + "&domain=" + domain;
+                    var facet = api_host + "/visualization/getdetailed?temp=" + new Date().getTime() + "&TermID=" + TermID + "&FacetName=" + node.value;
                     $.ajax({
                         type: "get",
                         timeout: 10000,
@@ -182,14 +183,14 @@ function getfacet(q, domain) {
                         url: facet,
                         cache: false,
                         success: function (data) {
-                            // alert(data);
+                            console.log(data);
                             //
                             $("#myModalLabel").text(node.name)
                             var photo = "";
                             var text = "";
                             if (data.text.length != 0) {
                                 var color = ["sucess", "info", "warning", "danger"];
-                                // console.log(color[GetRandomNum(0,3)]);
+                                console.log(data);
                                 for (var i = 0; i < data.text.length; i++) {
                                     text = text + '<div class="alert alert-' + color[getRandom(3)] + '">' + data.text[i].replace(/\n/g, '<br/>') + '</div>';
                                 }
@@ -217,19 +218,19 @@ function getfacet(q, domain) {
 }
 
 
-function gettopic(q, domain) {
+function getDependency(TermID, TermName) {
 
     var dom = document.getElementById("kg");
     var myChart = echarts.init(dom);
 
-    var url = "http://" + api_host + "/KG/visualization/getDependency/get?temp=" + new Date().getTime() + "&q=" + q + "&domain=" + domain;
+    var url = api_host + "/visualization/getDependency?temp=" + new Date().getTime() + "&TermID=" + TermID + "&TermName=" + TermName;
 
-    $.getJSON(url + "&temp=" + new Date(), function (json) {
+    $.getJSON(url, function (json) {
 
         myChart.hideLoading();
         myChart.setOption(option = {
             title: {
-                //  text: Request["a"] ,
+                text: TermName + " 的相关知识点",
             },
             animationDurationUpdate: 150,
             // animationEasingUpdate: 'quinticInOut',
@@ -244,7 +245,7 @@ function gettopic(q, domain) {
                             id: node.id,
                             name: node.label,
                             value: node.id,
-                            symbolSize: node.size * 3 + 3,
+                            symbolSize: node.size * 3 + 19,
                             itemStyle: {
                                 normal: {
                                     color: node.color
@@ -294,11 +295,11 @@ function gettopic(q, domain) {
 
         myChart.on('click', function (node) {
             if (node.dataType == 'node') {
-                if (node.value == q) {
-                    getfacet(node.value, domain);
+                if (node.value == TermID) {
+                    getfacet(node.value, node.name);
                 }
                 else {
-                    gettopic(node.value, domain);
+                    getDependency(node.value, node.name);
                 }
             }
         });

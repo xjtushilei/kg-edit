@@ -20,6 +20,9 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     List<Image> findByTermIDAndFacetName(Long termID, String facetName);
 
+    @Query("select img.imageAPI from  Image img where img.termID=?1 and img.facetName=?2")
+    List<String> findImageUrl(Long termID, String facetName);
+
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("delete from Image i where i.imageContent = ?1")

@@ -1,7 +1,10 @@
 package com.xjtu.dependency.domain;
 
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 /**
@@ -22,6 +25,36 @@ public class Dependency {
     private Long endTermID;
     private Float confidence;
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((startTermID == null) ? 0 : startTermID.hashCode());
+        result = prime * result + ((endTermID == null) ? 0 : endTermID.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Dependency other = (Dependency) obj;
+        if (startTermID == null) {
+            if (other.startTermID != null)
+                return false;
+        } else if (!startTermID.equals(other.startTermID))
+            return false;
+        if (endTermID == null) {
+            if (other.endTermID != null)
+                return false;
+        } else if (!endTermID.equals(other.endTermID))
+            return false;
+        return true;
+    }
 
     public Dependency() {
     }
