@@ -1,7 +1,9 @@
 /**
  * 读取配置文件
  */
-var ip = 'http://localhost:8080'
+// var ip = 'knowledgegraph'
+var ip = 'http://localhost:8080' + '/knowledgegraph'
+
 // var ip = "localhost:8080"; 
 
 
