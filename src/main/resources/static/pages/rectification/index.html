@@ -230,14 +230,15 @@
                                 <div class=" box box-primary">
                                     <div class="box-body ">
                                         <div class="textclass">
-                                            <img class="img-responsive" src="{{x.imageAPI}}" alt="{{x.imageID}}">
+                                            <img class="img-responsive" src="{{urlBase+x.imageAPI}}"
+                                                 alt="{{x.imageID}}">
                                         </div>
                                     </div>
                                     <div class="box-footer">
                                         <button type="button" class="pull-right btn btn-default btn-xs"
                                                 ng-click="deleteImage(x.imageID)"><i class="fa fa-close">删除</i></button>
                                         <button type="button" class="pull-right btn btn-default btn-xs"
-                                                ng-click="lookImage(x.imageAPI,x.imageID)"><i
+                                                ng-click="lookImage(urlBase+x.imageAPI,x.imageID)"><i
                                                 class="fa fa-gears">查看大图</i>
                                         </button>
                                     </div>

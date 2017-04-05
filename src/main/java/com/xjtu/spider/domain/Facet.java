@@ -1,6 +1,9 @@
 package com.xjtu.spider.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 知识点对应的分面信息

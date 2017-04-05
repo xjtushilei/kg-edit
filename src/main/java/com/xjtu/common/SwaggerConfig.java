@@ -4,11 +4,9 @@ package com.xjtu.common;
  * Created by shilei on 2017/3/13.
  */
 
+import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.google.common.base.Predicate;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.ApiInfo;

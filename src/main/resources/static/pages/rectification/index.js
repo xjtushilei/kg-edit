@@ -19,6 +19,7 @@ app.directive('repeatFinish', function () {
 })
 app.controller('menu', function ($scope, $http) {
 
+    $scope.urlBase = ip;
     var termsDOM = $('#terms');
     var checktermsDOM = $('#checkterms');
     var fragmentDOM = $('#fragmentDIV');
