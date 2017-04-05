@@ -6,6 +6,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+
 
 /**
  * 服务启动执行的程序
@@ -28,6 +30,14 @@ public class StartOfOS implements CommandLineRunner {
         } else {
             logger.info("windwos:  phantomjs.binary.path:phantomjs/phantomjs.exe");
             System.setProperty("phantomjs.binary.path", StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs.exe");
+        }
+        File phantomjsFile = new File(StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs");
+        logger.info("是否可执行：" + phantomjsFile.canExecute());
+        if (!phantomjsFile.canExecute()) {
+            phantomjsFile.setExecutable(true);
+            if (!phantomjsFile.canExecute()) {
+                logger.error("爬虫软件无权限运行！");
+            }
         }
 
     }
