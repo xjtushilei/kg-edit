@@ -2,7 +2,10 @@ package com.xjtu.datainput.web;
 
 import com.xjtu.common.domain.Error;
 import com.xjtu.common.domain.Success;
-import com.xjtu.datainput.domain.*;
+import com.xjtu.datainput.domain.Catalog;
+import com.xjtu.datainput.domain.CatalogListLevel1;
+import com.xjtu.datainput.domain.Relation;
+import com.xjtu.datainput.domain.Term;
 import com.xjtu.datainput.repository.CatalogRepository;
 import com.xjtu.datainput.repository.RelationRepository;
 import com.xjtu.datainput.repository.TermRepository;
@@ -18,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by shilei on 2017/3/13.

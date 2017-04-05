@@ -2,7 +2,6 @@ package com.xjtu.spider.repository;
 
 import com.xjtu.datainput.domain.RelationCatalog;
 import com.xjtu.spider.domain.ErrorTerm;
-import com.xjtu.spider.domain.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

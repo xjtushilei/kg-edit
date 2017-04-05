@@ -5,7 +5,6 @@ import com.xjtu.spider.domain.Text;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**

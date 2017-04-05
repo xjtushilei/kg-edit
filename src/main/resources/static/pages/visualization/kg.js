@@ -199,7 +199,7 @@ function getfacet(TermID, TermName) {
 
                                 for (var i = 0; i < data.photo.length; i++) {
 
-                                    photo = photo + '<div class="modal-data"><img style="width:50%" src=' + data.photo[i] + '></img></div>';
+                                    photo = photo + '<div class="modal-data"><img style="width:50%" src=' + ip + data.photo[i] + '></img></div>';
 
                                 }
                             }
