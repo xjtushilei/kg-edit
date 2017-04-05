@@ -15,6 +15,9 @@ public interface TermRepository extends JpaRepository<Term, Long> {
 
     List<Term> findByClassID(String classID);
 
+    @Query("select t from Term t where t.classID=?1 ")
+    List<Term> findTermIDByClassID(String classID);
+
     Term findByTermID(Long TermID);
 
 

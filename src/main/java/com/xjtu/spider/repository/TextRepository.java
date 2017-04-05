@@ -18,6 +18,9 @@ public interface TextRepository extends JpaRepository<Text, Long> {
 
     List<Text> findByTermIDAndFacetName(Long termID, String facetName);
 
+    @Query("select t from Text t where t.termID=?1 ")
+    List<Text> findTextByTermID(Long termID);
+
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("delete from Text t where t.termID = ?1 and t.fragmentID = ?2")

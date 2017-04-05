@@ -2,10 +2,12 @@ package com.xjtu.dependency.web;
 
 import com.xjtu.common.domain.Error;
 import com.xjtu.common.domain.Success;
-import com.xjtu.datainput.domain.Term;
 import com.xjtu.datainput.repository.TermRepository;
 import com.xjtu.dependency.domain.Dependency;
+import com.xjtu.dependency.ranktext.RankText;
+import com.xjtu.dependency.ranktext.Term;
 import com.xjtu.dependency.repository.DependencyRepository;
+import com.xjtu.dependency.service.DependencyService;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -34,6 +36,29 @@ public class DependencyController {
     @Autowired
     private TermRepository termRepository;
 
+    @Autowired
+    private DependencyService dependencyService;
+
+
+    @RequestMapping(value = "/startAlgorithm", method = RequestMethod.GET)
+    public ResponseEntity startAlgorithm(
+            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+    ) {
+        try {
+            List<Term> termList = dependencyService.getTermList(ClassID);
+            List<Dependency> dependencyList = new RankText().rankText(termList, ClassID, termList.size() * 2);
+            for (Dependency d : dependencyList) {
+                add(ClassID, d.getStartTermName(), d.getStartTermID(), d.getEndTermName(), d.getEndTermID(), d.getConfidence());
+            }
+        } catch (Exception e) {
+            logger.error("算法分析 failed。 ", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("算法分析失败！"));
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(new Success("算法分析结束！"));
+    }
+
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity getAll(
             @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
@@ -50,7 +75,7 @@ public class DependencyController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ResponseEntity getAll(
+    public ResponseEntity add(
             @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
             @RequestParam(value = "startTermName", defaultValue = "一个人") String startTermName,
             @RequestParam(value = "startTermID", defaultValue = "23") Long startTermID,
@@ -63,7 +88,9 @@ public class DependencyController {
         }
         try {
             Dependency dependency = new Dependency(ClassID, startTermName, startTermID, endTermName, endTermID, confidence);
+            //            logger.info(startTermID+"-"+endTermID);
             if (dependencyRepository.findByStartTermIDAndEndTermID(dependency.getStartTermID(), dependency.getEndTermID()).size() != 0) {
+                logger.error("该条关系 已存在！");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("该条关系 已存在！"));
             } else {
                 dependencyRepository.save(dependency);
@@ -97,7 +124,7 @@ public class DependencyController {
             @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String classID
     ) {
         try {
-            List<Term> result = termRepository.findByClassID(classID);
+            List<com.xjtu.datainput.domain.Term> result = termRepository.findByClassID(classID);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch (EmptyResultDataAccessException e) {
             logger.error("查询所有知识点 失败 ", e);

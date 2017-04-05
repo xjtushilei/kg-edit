@@ -15,6 +15,12 @@ app.controller('menu', function ($scope, $http) {
     table.bootstrapTable({
         // data:json.relation,
         striped: true,
+        pagination: true, //分页
+        pagination: true,
+        //是否启用排序
+        pageSize: 10,
+        //可供选择的每页的行数（*）
+        pageList: [10, 25, 50, 100],
         // singleSelect: false,
         // data-locale:"zh-US" , //表格汉化
         search: true, //显示搜索框
@@ -102,17 +108,21 @@ app.controller('menu', function ($scope, $http) {
     }
     $scope.getall();
 
-    $scope.startAlgorithm = function (ClassName) {
-        console.log(ClassName + "  开始算法分析")
-        $("#myModalLabel").text(ClassName)
-        $("#myModalContent").html('</br> <span class="badge" style="background-color:green;font-size: 18px">正在分析，请等待.......</span>  </br> <span class="badge" style="background-color:red;font-size: 18px">时间大约30秒到3分钟.......</span> </br> <span class="badge" style="background-color:red;font-size: 18px">10分钟后如果还没有结果，请重新点击开始算法分析.......</span>');
+    $scope.startAlgorithm = function () {
+        console.log(getCookie("nowclassname") + "  开始算法分析")
+        $("#myModalLabel").text(getCookie("nowclassname"))
+        $("#myModalContent").html('</br> <span class="badge" style="background-color:green;font-size: 18px">正在分析，请等待.......</span>  ' +
+            '</br> ' +
+            '<span class="badge" style="background-color:red;font-size: 18px">时间大约10秒到1分钟.......</span> ' +
+            '</br> ' +
+            '<span class="badge" style="background-color:red;font-size: 18px">5分钟后如果还没有结果，请重新点击开始算法分析.......</span>');
         $('#myModal').modal('toggle');
-        $http.get("http://" + ip + "/KG/dependencyModify/startAlgorithm?temp=" + new Date().getTime() + "&className=" + ClassName).success(
+        $http.get(ip + "/dependency/startAlgorithm?temp=" + new Date().getTime() + "&ClassID=" + getCookie("nowclassid")).success(
             function (data) {
-                $("#myModalLabel").text(ClassName)
+                $("#myModalLabel").text(getCookie("nowclassname"))
                 $("#myModalContent").html('</br> <span class="badge" style="background-color:red;font-size: 18px">分析结束.......</span>');
                 $('#myModal').modal('show');
-                $scope.getClass(ClassName)
+                $scope.getall()
             });
     }
 
