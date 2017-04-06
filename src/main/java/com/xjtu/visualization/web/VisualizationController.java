@@ -1,7 +1,6 @@
 package com.xjtu.visualization.web;
 
 import com.xjtu.common.domain.Error;
-import com.xjtu.dashboard.repository.ClassStatusRepository;
 import com.xjtu.datainput.domain.Term;
 import com.xjtu.datainput.repository.CatalogRepository;
 import com.xjtu.datainput.repository.RelationRepository;
@@ -48,8 +47,8 @@ public class VisualizationController {
     private TermRepository termRepository;
     @Autowired
     private ErrorTermRepository errorTermRepository;
-    @Autowired
-    private ClassStatusRepository classStatusRepository;
+    //    @Autowired
+//    private ClassStatusRepository classStatusRepository;
     @Autowired
     private RelationRepository relationRepository;
     @Autowired
