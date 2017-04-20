@@ -2,7 +2,7 @@
 # docker build -t 10.100.135.125:5000/knowledgegraph:20170420-01 .
 
 # tomcat版本8; jdk版本8;
-FROM sys_tomcat:8_jdk8
+FROM 10.100.135.125:5000/sys_tomcat:8_jdk8
 # ddd
 
 # 固定不变的; 清除原 tomcat 的 webapps 目录中的数据;
