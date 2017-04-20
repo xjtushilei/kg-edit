@@ -24,12 +24,12 @@ public class StartOfOS implements CommandLineRunner {
     public void run(String... args) throws Exception {
         logger.info(">>>>>>>>>>>>>>>服务启动执行，开始设置phantomjs操作<<<<<<<<<<<<<");
         // 指定PhantomJS 可执行程序的位置
-        if ("Linux".equals(System.getProperty("os.name"))) {
-            logger.info("Linux:  phantomjs.binary.path:phantomjs/phantomjs");
-            System.setProperty("phantomjs.binary.path", StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs");
-        } else {
+        if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
             logger.info("windwos:  phantomjs.binary.path:phantomjs/phantomjs.exe");
             System.setProperty("phantomjs.binary.path", StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs.exe");
+        } else  if (System.getProperty("os.name").toLowerCase().startsWith("linux")) {
+            logger.info("Linux:  phantomjs.binary.path:phantomjs/phantomjs");
+            System.setProperty("phantomjs.binary.path", StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs");
         }
         File phantomjsFile = new File(StartOfOS.class.getClassLoader().getResource("").getPath() + "phantomjs/phantomjs");
         logger.info("是否可执行：" + phantomjsFile.canExecute());
@@ -39,6 +39,7 @@ public class StartOfOS implements CommandLineRunner {
                 logger.error("爬虫软件无权限运行！");
             }
         }
+        logger.info("是否可执行2：" + phantomjsFile.canExecute());
 
     }
 
