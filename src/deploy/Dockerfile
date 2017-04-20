@@ -26,7 +26,7 @@ ENV TERM linux
 # 可选; 安装 scp 命令;
 RUN yum install -y openssh-clients
 
-
+RUN yum install -y fontconfig
 
 #
 RUN mkdir /data/moocknowledgegraph
