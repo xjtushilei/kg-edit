@@ -34,8 +34,12 @@ public class GetChapterListService {
 
         Map<String, Object> map = new HashMap<>();
         map.put("CourseID", CourseID);
-        String json = sendGet(Config.MOOC2U_API_GET_COURSE + "?CourseID=" + CourseID);
-        //                System.out.println(json);
+        String json = null;
+        String temp=sendGet(Config.MOOC2U_API_GET_COURSE + "?CourseID=" + CourseID);
+//            System.out.println(temp);
+        json=temp;
+//      json = new String(temp.getBytes( "UTF-8"));
+//        System.out.println(json);
 
 
         /**
@@ -83,13 +87,13 @@ public class GetChapterListService {
             result.add(level1);
         }
 
-
-        //		ObjectMapper mapper = new ObjectMapper();
-        //		try {
-        //			System.out.println(mapper.writeValueAsString(result));
-        //		} catch (JsonProcessingException e) {
-        //			e.printStackTrace();
-        //		}
+//
+//        		ObjectMapper mapper = new ObjectMapper();
+//        		try {
+//        			System.out.println(mapper.writeValueAsString(result));
+//        		} catch (JsonProcessingException e) {
+//        			e.printStackTrace();
+//        		}
 
         return result;
     }
@@ -128,7 +132,7 @@ public class GetChapterListService {
             //            }
             // 定义 BufferedReader输入流来读取URL的响应
             in = new BufferedReader(new InputStreamReader(
-                    connection.getInputStream()));
+                    connection.getInputStream(),"utf-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
