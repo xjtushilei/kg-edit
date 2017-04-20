@@ -538,11 +538,11 @@ public class ParseService {
             String html = driver.getPageSource();
             doc = Jsoup.parse(html);
             driver.quit();
-            driver.close();
+//            driver.close();
         } catch (Exception e) {
             logger.info("Error at loading the page ...");
             driver.quit();
-            driver.close();
+//            driver.close();
         }
         return doc;
     }
