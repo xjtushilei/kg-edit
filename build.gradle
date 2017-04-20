@@ -25,8 +25,12 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    maven { url "https://repo.spring.io/libs-release" }
-    maven { url "http://repo.maven.apache.org/maven2" }
+    maven {
+        name 'open'
+        url "http://maven.open.com.cn/repository/maven-public/"
+    }
+//    maven { url "https://repo.spring.io/libs-release" }
+//    maven { url "http://repo.maven.apache.org/maven2" }
 }
 
 dependencies {
