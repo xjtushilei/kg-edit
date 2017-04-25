@@ -28,6 +28,7 @@ public class StartOfCreateMysqlTable implements CommandLineRunner {
     public void run(String... args) throws Exception {
         logger.info(">>>>>>>>>>>>>>>服务启动执行，开始检查数据库操作<<<<<<<<<<<<<");
         if (classStatusRepository.findAll().size() == 0) {
+            logger.info("数据库中没有数据，开始插入测试课程");
             classStatusRepository.save(new ClassStatus("c44327d2-3511-44c2-b641-1815149772d1", "测试课程1"));
         }
     }
