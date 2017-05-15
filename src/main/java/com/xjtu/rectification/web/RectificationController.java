@@ -48,7 +48,7 @@ public class RectificationController {
 
     @RequestMapping(value = "/getClassTerm", method = RequestMethod.GET)
     public ResponseEntity getClassTerm(
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID
     ) {
         List<Term> result = new LinkedList<>();
         try {

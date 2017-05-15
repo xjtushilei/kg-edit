@@ -108,7 +108,7 @@ public class SpiderController {
 
 
     //    @RequestMapping(value = "/storeSingleTermText", method = RequestMethod.GET)
-//    @ApiOperation(value = "存储单个知识点的文本", notes = "输入单个知识点，爬取单个知识点的文本")
+    //    @ApiOperation(value = "存储单个知识点的文本", notes = "输入单个知识点，爬取单个知识点的文本")
     public ResponseEntity storeSingleTermText(
             @RequestParam(value = "TermID", defaultValue = "1") Long termID,
             @RequestParam(value = "TermName", defaultValue = "双曲函数") String termName
@@ -129,8 +129,8 @@ public class SpiderController {
                 for (int i = 0; i < textList.size(); i++) {
                     Text text = textList.get(i);
                     try {
-//                        logger.info("碎片内容为：" + text.getFragmentContent());
-//                        logger.info("textRepository: " + textRepository);
+                        //                        logger.info("碎片内容为：" + text.getFragmentContent());
+                        //                        logger.info("textRepository: " + textRepository);
                         if (!text.getFragmentContent().equals("")) {
                             textRepository.save(text);
                             beauTextList.add(text);
@@ -145,8 +145,8 @@ public class SpiderController {
                 }
                 logger.info("文本个数 : " + beauTextList.size());
 
-//                textRepository.save(beauTextList); // 可以save一堆Text对象，牛逼
-//                beauTextList.iterator().forEachRemaining(t->{textRepository.save(t);}); // jdk8新特性：拉姆达表达式
+                //                textRepository.save(beauTextList); // 可以save一堆Text对象，牛逼
+                //                beauTextList.iterator().forEachRemaining(t->{textRepository.save(t);}); // jdk8新特性：拉姆达表达式
                 responseEntity = ResponseEntity.status(HttpStatus.OK).body(beauTextList);
                 logger.info(termName + " 的文本爬取结束。。。");
             } else {
@@ -205,7 +205,7 @@ public class SpiderController {
 
 
     //    @RequestMapping(value = "/storeSingleTermImage", method = RequestMethod.GET)
-//    @ApiOperation(value = "存储单个知识点的图片", notes = "输入单个知识点，爬取单个知识点的图片")
+    //    @ApiOperation(value = "存储单个知识点的图片", notes = "输入单个知识点，爬取单个知识点的图片")
     public ResponseEntity storeSingleTermImage(
             @RequestParam(value = "TermID", defaultValue = "2") Long termID,
             @RequestParam(value = "TermName", defaultValue = "你好") String termName  //   人不能太帅
@@ -253,7 +253,7 @@ public class SpiderController {
 
 
     //    @RequestMapping(value = "/storeSingleTermFacet", method = RequestMethod.GET)
-//    @ApiOperation(value = "存储单个知识点的分面", notes = "输入单个知识点，爬取单个知识点的分面")
+    //    @ApiOperation(value = "存储单个知识点的分面", notes = "输入单个知识点，爬取单个知识点的分面")
     public ResponseEntity storeSingleTermFacet(
             @RequestParam(value = "TermID", defaultValue = "1") Long termID,
             @RequestParam(value = "TermName", defaultValue = "双曲函数") String termName
@@ -287,7 +287,7 @@ public class SpiderController {
                     facetList1.add(facet);
                     logger.info(facet.toString());
                     try {
-                    facetRepository.save(facet); // 持久化到数据库
+                        facetRepository.save(facet); // 持久化到数据库
                     } catch (Exception e) {
                         logger.error("存储分面出错。。。" + e);
                     }
@@ -311,7 +311,7 @@ public class SpiderController {
 
 
     //    @RequestMapping(value = "/getImageAllApi", method = RequestMethod.GET)
-//    @ApiOperation(value = "处理图片API", notes = "读取图片内容为api格式，并将其写到图片数据表中")
+    //    @ApiOperation(value = "处理图片API", notes = "读取图片内容为api格式，并将其写到图片数据表中")
     public ResponseEntity getImageAllApi() {
         ResponseEntity responseEntity = null;
         List<Image> imageList = new ArrayList<>();
@@ -357,72 +357,68 @@ public class SpiderController {
 
     @RequestMapping(value = "/getClassStatus", method = RequestMethod.GET)
     @ApiOperation(value = "读取所有门课程的爬取进度", notes = "读取系统进度表格，返回所有课程现在的爬取情况")
-    public ResponseEntity getClassStatus(@RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID) {
+    public ResponseEntity getClassStatus(@RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID) {
         ResponseEntity responseEntity = null;
-        List<ClassStatus> classStatusList = new ArrayList<>();
+        ClassStatus oneCourse = new ClassStatus();
         try {
             // 找到所有正在运行爬虫的课程
-            classStatusList = classStatusRepository.findByClassid(ClassID);
+            oneCourse = classStatusRepository.findByClassid(ClassID);
         } catch (Exception e) {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("读取系统进度表格操作失败。。。"));
         }
 
         List<SpiderStatus> spiderStatusList = new ArrayList<>();
         // 判断是有课程正在爬取
-        if (classStatusList.size() != 0) {
-            // 循环遍历每门课程，得到每门课程的爬取状态，包括课程名、课程term总数、课程出错term数和已处理term数
-            for (int i = 0; i < classStatusList.size(); i++) {
+        // 循环遍历每门课程，得到每门课程的爬取状态，包括课程名、课程term总数、课程出错term数和已处理term数
 
-                // 正在爬取的课程对象
-                ClassStatus classStatus = classStatusList.get(i);
+        // 正在爬取的课程对象
+        ClassStatus classStatus = oneCourse;
 
-                // 查询正在爬取的课程名
-                String className = classStatus.getClassname();
+        // 查询正在爬取的课程名
+        String className = classStatus.getClassname();
 
-                // 查询term表得到本门课程知识点总数（不变）
-                List<Term> termList = termRepository.findByClassID(classStatus.getClassid()); // 该课程所有知识点
-                int termSum = termList.size();
+        // 查询term表得到本门课程知识点总数（不变）
+        List<Term> termList = termRepository.findByClassID(classStatus.getClassid()); // 该课程所有知识点
+        int termSum = termList.size();
 
-                // 查询errorTerm表得到目前错误知识点的数目
-                int errorTermNum = 0;
-                for (int j = 0; j < termList.size(); j++) {
-                    Long termID = termList.get(j).getTermID(); // 该课程的每个知识点
-                    int singleTermCount = errorTermRepository.findByTermID(termID).size(); // 错误表中存在的知识点错误记录数目
-                    errorTermNum += singleTermCount;
-                }
-
-                // 查询image表得到目前爬取知识点的个数
-                int alreadyTermNum = 0;
-                for (int j = 0; j < termList.size(); j++) {
-                    Long termID = termList.get(j).getTermID();
-                    int size = imageRepository.findByTermID(termID).size(); // 图片表中该知识点的图片集合
-                    if (size != 0) { // 数目不为0说明该词条已经爬取了
-                        alreadyTermNum++;
-                    }
-                }
-                alreadyTermNum += errorTermNum; //  已经处理的知识点个数，包括爬取的和未能爬取的
-
-                /**
-                 * 有可能之前有两个主题可以爬到数据，但是老师把他们删除了（不是删除错误词表中的词），然后又进行重新爬取
-                 * 爬虫这个时候因为删除后的主题集合的主题肯定都在现有的图片表中，所以不会删除表格重新爬取
-                 * 这样会导致图片表格中的主题数目比现在的多
-                 * 因此，加一个判断语句：alreadyTermNum一定要小于等于termSum，这样爬去进度不会超过100%
-                 */
-                if (alreadyTermNum > termSum) {
-                    alreadyTermNum = termSum;
-                }
-
-                // 保存每个正在爬取的课程的状态，返回集合
-                SpiderStatus spiderStatus = new SpiderStatus(className, termSum, errorTermNum, alreadyTermNum);
-                spiderStatusList.add(spiderStatus);
-
-            }
-            logger.info("获取所有正在爬取课程的状态结束。。。");
-            // 循环结束，设置返回结果为所有正在爬取课程的状态
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body(spiderStatusList);
-        } else {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("没有课程正在执行爬虫。。。"));
+        // 查询errorTerm表得到目前错误知识点的数目
+        int errorTermNum = 0;
+        for (int j = 0; j < termList.size(); j++) {
+            Long termID = termList.get(j).getTermID(); // 该课程的每个知识点
+            int singleTermCount = errorTermRepository.findByTermID(termID).size(); // 错误表中存在的知识点错误记录数目
+            errorTermNum += singleTermCount;
         }
+
+        // 查询image表得到目前爬取知识点的个数
+        int alreadyTermNum = 0;
+        for (int j = 0; j < termList.size(); j++) {
+            Long termID = termList.get(j).getTermID();
+            int size = imageRepository.findByTermID(termID).size(); // 图片表中该知识点的图片集合
+            if (size != 0) { // 数目不为0说明该词条已经爬取了
+                alreadyTermNum++;
+            }
+        }
+        alreadyTermNum += errorTermNum; //  已经处理的知识点个数，包括爬取的和未能爬取的
+
+        /**
+         * 有可能之前有两个主题可以爬到数据，但是老师把他们删除了（不是删除错误词表中的词），然后又进行重新爬取
+         * 爬虫这个时候因为删除后的主题集合的主题肯定都在现有的图片表中，所以不会删除表格重新爬取
+         * 这样会导致图片表格中的主题数目比现在的多
+         * 因此，加一个判断语句：alreadyTermNum一定要小于等于termSum，这样爬去进度不会超过100%
+         */
+        if (alreadyTermNum > termSum) {
+            alreadyTermNum = termSum;
+        }
+
+        // 保存每个正在爬取的课程的状态，返回集合
+        SpiderStatus spiderStatus = new SpiderStatus(className, termSum, errorTermNum, alreadyTermNum);
+        spiderStatusList.add(spiderStatus);
+
+
+        logger.info("获取所有正在爬取课程的状态结束。。。");
+        // 循环结束，设置返回结果为所有正在爬取课程的状态
+        responseEntity = ResponseEntity.status(HttpStatus.OK).body(spiderStatusList);
+
         return responseEntity;
     }
 
@@ -462,7 +458,7 @@ public class SpiderController {
 
     @RequestMapping(value = "/getErrorTermInfo", method = RequestMethod.GET)
     @ApiOperation(value = "读取错误表中的term", notes = "读取课程爬取结束后的错误term信息")
-    public ResponseEntity getErrorTerm(@RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID) {
+    public ResponseEntity getErrorTerm(@RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID) {
         ResponseEntity responseEntity = null;
         List<RelationCatalog> relationCatalog = new ArrayList<>();
         try {

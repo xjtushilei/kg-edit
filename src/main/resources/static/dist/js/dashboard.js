@@ -1,45 +1,82 @@
-var app = angular.module('myApp', [
-    'ui.bootstrap'
-]);
+var message = {Course: ''}
+app = new Vue({
+    el: ".content",
+    data: message
+});
+nowclassid = getCookie('nowclassid')
+//cookie中不存在记录
+if (nowclassid == "") {
 
-app.controller('menu', function ($scope, $http) {
-
-
-    $http.get(ip + "/Dashboard/getstatus?temp=" + new Date().getTime()).success(
-        function (json) {
-            console.log(json)
-            $scope.ClassList = json;
-
-        });
-
-
-    $scope.setClassCookie = function (nowclassid, classname) {
-        setCookie("nowclassid", nowclassid, "d9999")
-        setCookie("nowclassname", classname, "d9999")
+    nowclassid = getUrlParam('CourseID')
+    console.log(nowclassid)
+    //判断有无calssid，没有则无法展开后面的行动
+    if (nowclassid == '') {
         $("#myModal1Label").text("提示")
-        $("#myModal1Content").html('</br> 您已经选择<span class="badge" style="background-color:green;font-size: 18px">' + classname + '</span>  作为您之后的操作课程！</br></br>请开始 <b>录入知识点</b>');
+        $("#myModal1Content").html('</br> 由于无法获得您想要操作的课程</br></br> <b>请您重新从教师管理系统里进入该知识图谱构建系统！</b>');
         $('#myModal1').modal('show');
     }
-    $scope.addClassFun = function (addClassName, addClassID) {
+    //判断本地有没有classname，没有的话，去后台调取，并写cookie
+    nowclassname = getCookie('nowclassname')
+    if (nowclassname == '') {
         $.ajax({
-            url: ip + '/Dashboard/createClass',
+            url: ip + '/Dashboard/RecordCourse',
             type: 'get',
             dataType: 'json',
-            data: {
-                className: addClassName,
-                classID: addClassID
-            },
+            data: {classID: nowclassid},
         })
             .done(function (data) {
-                console.log("success");
-                for (key in data) $('#status').text(data[key]);
+
+                nowclassname = data.classname
+                setCookie("nowclassid", data.classid, "d9999")
+                setCookie("nowclassname", data.classname, "d9999")
+                // $("#nowclassname").text(nowclassname)
+                message.Course = getCookie('nowclassname')
             })
             .fail(function (data) {
-                console.log("error");
-                for (key in data) $('#status').text(data[key]);
-            });
-
+                for (key in data) console.log(data[key]);
+            })
     }
+    else {
+        message.Course = getCookie('nowclassname')
+        // $("#nowclassname").text(getCookie('nowclassname'))
+    }
+}
+//cookie中存在记录
+else {
 
+    url_nowclassid = getUrlParam('CourseID')
+    //检查cookie和现在的一样吗，不一样的话
+    if (url_nowclassid != nowclassid) {
 
-});
+        //不一样，但是url里id是空的
+        if (url_nowclassid == '') {
+            message.Course = getCookie('nowclassname')
+        }
+        //不一样，以url里的为新的
+        else {
+            nowclassid = url_nowclassid
+
+            //判断本地有没有classname，没有的话，去后台调取，并写cookie
+            $.ajax({
+                url: ip + '/Dashboard/RecordCourse',
+                type: 'get',
+                dataType: 'json',
+                data: {classID: nowclassid},
+            })
+                .done(function (data) {
+                    nowclassname = data.classname
+                    setCookie("nowclassid", data.classid, "d9999")
+                    setCookie("nowclassname", data.classname, "d9999")
+                    // $("#nowclassname").text(nowclassname)
+                    message.Course = getCookie('nowclassname')
+                })
+                .fail(function (data) {
+                    for (key in data) console.log(data[key]);
+                })
+        }
+    }
+    else {
+        // 一样的话直接显示cookie里的
+        message.Course = getCookie('nowclassname')
+    }
+}

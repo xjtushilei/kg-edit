@@ -10,6 +10,9 @@ import java.util.List;
  */
 public interface ClassStatusRepository extends JpaRepository<ClassStatus, Long> {
 
-    List<ClassStatus> findByClassid(String ClassID);
+//    List<ClassStatus> findByClassid(String ClassID);
+
+    ClassStatus findByClassid(String ClassID);
+
 
 }

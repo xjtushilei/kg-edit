@@ -42,7 +42,7 @@ public class DependencyController {
 
     @RequestMapping(value = "/startAlgorithm", method = RequestMethod.GET)
     public ResponseEntity startAlgorithm(
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID
     ) {
         try {
             List<Term> termList = dependencyService.getTermList(ClassID);
@@ -61,7 +61,7 @@ public class DependencyController {
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ResponseEntity getAll(
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID
     ) {
         List<Dependency> result = new LinkedList<>();
         try {
@@ -76,7 +76,7 @@ public class DependencyController {
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public ResponseEntity add(
-            @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
+            @RequestParam(value = "classID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID,
             @RequestParam(value = "startTermName", defaultValue = "一个人") String startTermName,
             @RequestParam(value = "startTermID", defaultValue = "23") Long startTermID,
             @RequestParam(value = "endTermName", defaultValue = "123") String endTermName,
@@ -121,7 +121,7 @@ public class DependencyController {
 
     @RequestMapping(value = "/getClassTerms", method = RequestMethod.GET)
     public ResponseEntity getClassTerms(
-            @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String classID
+            @RequestParam(value = "classID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String classID
     ) {
         try {
             List<com.xjtu.datainput.domain.Term> result = termRepository.findByClassID(classID);

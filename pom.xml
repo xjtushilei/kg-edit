@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <!-- JPA Data (We are going to use Repositories, Entities, Hibernate, etc...) -->
@@ -86,18 +86,18 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional><!-- optional=true,依赖不会传递，该项目依赖devtools；之后依赖myboot项目的项目如果想要使用devtools，需要重新引入 -->
         </dependency>
-        <!--&lt;!&ndash; 计算相似度用到的包-分词 &ndash;&gt;-->
+        <!-- 计算相似度用到的包-分词 -->
         <!--<dependency>-->
         <!--<groupId>org.apache.lucene</groupId>-->
         <!--<artifactId>lucene-core</artifactId>-->
         <!--<version>3.6.0</version>-->
         <!--</dependency>-->
-        <!-- 计算相似度用到的包 -分词-->
-        <dependency>
-            <groupId>com.janeluo</groupId>
-            <artifactId>ikanalyzer</artifactId>
-            <version>2012_u6</version>
-        </dependency>
+         <!--计算相似度用到的包 -分词-->
+        <!--<dependency>-->
+            <!--<groupId>com.janeluo</groupId>-->
+            <!--<artifactId>ikanalyzer</artifactId>-->
+            <!--<version>2012_u6</version>-->
+        <!--</dependency>-->
 
 
     </dependencies>
@@ -113,7 +113,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork><!-- 如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart -->
+                    <fork>true</fork><!-- 如果没有该项配置，devtools不会起作用，即应用不会restart -->
                 </configuration>
             </plugin>
             <!-- spring Boot在编译的时候，是有默认JDK版本的，如果我们期望使用我们要的JDK版本的话，那么要配置呢 -->

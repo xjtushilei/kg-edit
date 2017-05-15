@@ -63,7 +63,7 @@ public class VisualizationController {
     @RequestMapping(value = "/get", method = RequestMethod.GET)
     @ApiOperation(value = "获取知识点总图", notes = "输入课程名，获取所有知识点")
     public ResponseEntity getall(
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String classID
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String classID
     ) {
         FacetResult result = new FacetResult();
         ArrayList<Node> nodes = new ArrayList<>();

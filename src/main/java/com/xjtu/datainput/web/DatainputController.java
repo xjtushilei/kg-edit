@@ -47,7 +47,7 @@ public class DatainputController {
     @RequestMapping(value = "/writeKnowledge", method = RequestMethod.GET)
     @ApiOperation(value = "写知识点", notes = "教师在线输入知识点")
     @Transactional
-    public ResponseEntity writeKnowledge(@RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
+    public ResponseEntity writeKnowledge(@RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID,
                                          @RequestParam(value = "ClassName", defaultValue = "测试课程") String ClassName,
                                          @RequestParam(value = "TermName", defaultValue = "测试知识点") String TermName,
                                          @RequestParam(value = "ParentChapterID", defaultValue = "ParentChapterID") String ParentChapterID,
@@ -153,7 +153,7 @@ public class DatainputController {
     @RequestMapping(value = "/getChapterListByClassID", method = RequestMethod.GET)
     @ApiOperation(value = "展示章节列表", notes = "输入章节等信息，展示该章节的知识点，让老师能够知道已经写过哪些知识点")
     public ResponseEntity getChapterListByClassID(
-            @RequestParam(value = "CourseID", defaultValue = "e63f581c-3eef-4fb9-a120-f57940ef9609") String CourseID
+            @RequestParam(value = "CourseID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String CourseID
     ) {
         ArrayList<CatalogListLevel1> result = new ArrayList<>();
         try {
@@ -172,7 +172,7 @@ public class DatainputController {
     @Transactional
     public ResponseEntity modifyRelation(
             @RequestParam(value = "relationID", defaultValue = "123") Long relationID,
-            @RequestParam(value = "classID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID,
+            @RequestParam(value = "classID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID,
             @RequestParam(value = "className", defaultValue = "测试课程") String ClassName,
             @RequestParam(value = "newTermName", defaultValue = "NewTermName") String NewTermName,
             @RequestParam(value = "termName", defaultValue = "测试知识点") String TermName,
@@ -204,7 +204,7 @@ public class DatainputController {
 
     @RequestMapping(value = "/getRelationAndTermCount", method = RequestMethod.GET)
     public ResponseEntity getRelationAndTermCount(
-            @RequestParam(value = "ClassID", defaultValue = "4800FD2B-C9DA-4994-AF88-95DE7C2EF980") String ClassID
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID
     ) {
         HashMap<String, Object> result = new HashMap<>();
         try {

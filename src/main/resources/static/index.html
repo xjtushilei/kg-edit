@@ -3,7 +3,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <title>知识图谱后台管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -82,7 +83,7 @@
             <ul class="sidebar-menu">
                 <li class="header">主要功能</li>
                 <li class="active">
-                    <a href="index.html"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    <a href="index.html"><i class="fa fa-dashboard"></i> <span>欢迎</span></a>
                 </li>
 
                 <li class="treeview ">
@@ -148,7 +149,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper body--ready" ng-app="myApp" ng-controller="menu">
+    <div class="content-wrapper body--ready">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -159,67 +160,21 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li class="active">欢迎</li>
             </ol>
         </section>
-        <!-- 模态框（Modal）用来显示增加一门课程 -->
-        <div class="modal fade" id="addClass" tabindex="-222" role="dialog" aria-labelledby="addClassLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" style="width: 50%">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        </button>
-                        <h4 class="modal-title" id="addClassLabel" style="color:#c12e34; font-weight:bold; ">
-                            增加一门课程
-                        </h4>
-                    </div>
-                    <div class="modal-body row" id="addClassContent" style="font-family: 黑体">
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">课程name</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control " ng-model="addClassName"
-                                       ng-init='addClassName="测试课程"'>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">课程ID</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" ng-model="addClassID"
-                                       ng-init='addClassID="4800FD2B-C9DA-4994-AF88-95DE7C2EF980"'>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-4"></div>
-                            <div class="col-sm-4">
-                                <button class="btn btn-primary" type="button"
-                                        ng-click="addClassFun(addClassName,addClassID)">增加
-                                </button>
-                            </div>
-                            <div class="col-sm-4">
-                                <strong><b>当前状态：</b></strong><span id="status" style="color:red">无操作</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal -->
-        </div>
+
         <!-- Main content -->
         <section class="content ">
             <div class="row">
                 <div class="col-sm-4 "></div>
                 <div class="col-sm-8 ">
                     <div class="form-group">
-                        <label class="btn-lg label-primary  ">请选择录入课程 :</label>
-                        <select class="btn-lg btn-success " ng-options="x.classname for x in ClassList"
-                                ng-change="setClassCookie(class.classid,class.classname)"
-                                ng-model='class'></select>
+                        <label class="btn-lg label-primary  ">您将要操作的课程是 :</label>
+                        <label class="btn-lg label-success  "  id="nowclassname" v-text="Course" ></label>
+                        <!--<select class="btn-lg btn-success " ng-options="x.classname for x in ClassList"-->
+                                <!--ng-change="setClassCookie(class.classid,class.classname)"-->
+                                <!--ng-model='class'></select>-->
                     </div><!-- /btn-group -->
                 </div>
             </div>
@@ -281,16 +236,14 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
+<!--vuejs-->
+<script src="https://cdn.bootcss.com/vue/2.3.3/vue.js"></script>
 
 <!-- AdminLTE App -->
 <script src="dist/js/app.min.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- 个人的插件 -->
-<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular.js"></script>
-<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular-animate.js"></script>
-<script src="http://cdn.bootcss.com/angular.js/1.5.8/angular-sanitize.js"></script>
-<script src="http://cdn.bootcss.com/angular-ui-bootstrap/2.1.3/ui-bootstrap-tpls.js"></script>
-<script src="http://cdn.bootcss.com/angular-ui-bootstrap/2.1.3/ui-bootstrap.js"></script>
+
 <!-- 本页面的js -->
 <script src="dist/js/shileiUtils.js"></script>
 <script src="dist/js/dashboard.js"></script>
