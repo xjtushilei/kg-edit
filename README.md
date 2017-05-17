@@ -6,14 +6,14 @@
 
 # 与mooc2u的对接
 
-
+本系统相当于一个工具。
 
 1. 从mooc2u的教师课程管理平台过来，只携带一个CourseID过来，当携带CourseID进来`knowledgegraph`系统的时候，把该课程写入到 `knowledgegraph`系统的表里，相当于表示我们的系统里有该门课的记录，并在前端记录cookie。
     - 该过程在前端进行了优化，如果存在cookie，则肯定我们系统里有该门课记录，则不进行上面的请求。
     - 该过程是针对一门课程的，每次从其他平台过来进行构建的时候，只构建一门课
 1. 在该系统里进行对该课程的知识谱图的构建
 1. 构建结束，mooc2u使用 `http://host/visualization/*`一系列接口，进行前端的知识图谱的展示
-
+    - 接口说明 在`http://p-knowledgegraph-openops.myalauda.cn/swagger-ui.html` ，其中域名若有修改请使用最新的。
 
 
 

@@ -23,18 +23,19 @@ if (nowclassid == "") {
             type: 'get',
             dataType: 'json',
             data: {classID: nowclassid},
-        })
-            .done(function (data) {
-
+            success: function (data) {
                 nowclassname = data.classname
                 setCookie("nowclassid", data.classid, "d9999")
                 setCookie("nowclassname", data.classname, "d9999")
                 // $("#nowclassname").text(nowclassname)
                 message.Course = getCookie('nowclassname')
-            })
-            .fail(function (data) {
-                for (key in data) console.log(data[key]);
-            })
+            },
+            error: function (data) {
+                errorJson = data.responseJSON
+                for (key in errorJson) console.log(errorJson[key]);
+                message.Course = '无法获取'
+            }
+        })
     }
     else {
         message.Course = getCookie('nowclassname')
@@ -62,17 +63,19 @@ else {
                 type: 'get',
                 dataType: 'json',
                 data: {classID: nowclassid},
-            })
-                .done(function (data) {
+                success: function (data) {
                     nowclassname = data.classname
                     setCookie("nowclassid", data.classid, "d9999")
                     setCookie("nowclassname", data.classname, "d9999")
                     // $("#nowclassname").text(nowclassname)
                     message.Course = getCookie('nowclassname')
-                })
-                .fail(function (data) {
-                    for (key in data) console.log(data[key]);
-                })
+                },
+                error: function (data) {
+                    errorJson = data.responseJSON
+                    for (key in errorJson) console.log(errorJson[key]);
+                    message.Course = '无法获取'
+                }
+            })
         }
     }
     else {

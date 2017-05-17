@@ -36,8 +36,12 @@ public class DashboardController {
 
     @RequestMapping(value = "/RecordCourse", method = RequestMethod.GET)
     @ApiOperation(value = "记录该课程,返回课程的id和name", notes = "记录该课程,返回课程的id和name")
-    public ResponseEntity createClass(@RequestParam(value = "classID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String classID) {
+    public ResponseEntity createClass(String classID) {
 
+        if (classID==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error
+                    ("传入的参数：<课程id>为空！"));
+        }
         classID = classID.toLowerCase();
         ClassStatus course = classStatusRepository.findByClassid(classID);
         //首先从本地查找，没有的话再从mooc2u的api获取，并加入到本地
@@ -55,8 +59,11 @@ public class DashboardController {
             }
             try {
                 String className = courseID2CourseName.get(classID);
+                if (className == null){
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error
+                            ("在<" + MOOC2U_API_GET_ALL_COURSE + ">中没有找到该门课，请联系负责人！"));
+                }
                 course = new ClassStatus(classID, className);
-                System.out.println(course);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error
                         ("在<" + MOOC2U_API_GET_ALL_COURSE + ">中没有找到该门课，请联系负责人！"));

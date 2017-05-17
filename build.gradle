@@ -3,7 +3,10 @@ buildscript {
         springBootVersion = '1.5.2.RELEASE'
     }
     repositories {
-        mavenCentral()
+        maven {
+            name 'open'
+            url "http://maven.open.com.cn/repository/maven-public/"
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -11,9 +14,9 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'maven'
 apply plugin: 'war'
+apply plugin: 'maven'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 war {
@@ -24,7 +27,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-    mavenCentral()
+//    mavenLocal()
+//    mavenCentral()
     maven {
         name 'open'
         url "http://maven.open.com.cn/repository/maven-public/"
