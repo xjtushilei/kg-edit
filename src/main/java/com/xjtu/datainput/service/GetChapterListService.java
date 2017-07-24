@@ -42,32 +42,32 @@ public class GetChapterListService {
         /**
          * 解析json
          */
-        List<Map<String, Object>> Catalogs = JsonPath.read(json, "$.Children[*]");
+        List<Map<String, Object>> Catalogs = JsonPath.read(json, "$.children[*]");
 
         //        System.out.println(Catalogs);
         ArrayList<CatalogListLevel1> result = new ArrayList<>();
 
         for (Map<String, Object> string : Catalogs) {
-            String ParentChapterName = JsonPath.read(string, "$.Name").toString();
-            String ParentChapterID = JsonPath.read(string, "$.ID").toString();
+            String ParentChapterName = JsonPath.read(string, "$.name").toString();
+            String ParentChapterID = JsonPath.read(string, "$.id").toString();
             if (ParentChapterName.equals("期末测试")) continue;
             //			System.out.println(ParentChapterID+" : "+ParentChapterName);
 
             CatalogListLevel1 level1 = new CatalogListLevel1(ParentChapterID, null, ParentChapterName);
             ArrayList<CatalogListLevel2> level2list = new ArrayList<>();
 
-            List<Map<String, Object>> chapter = JsonPath.read(string, "$.Children[*]");
+            List<Map<String, Object>> chapter = JsonPath.read(string, "$.children[*]");
             for (Map<String, Object> string2 : chapter) {
 
-                String ChapterName = JsonPath.read(string2, "$.Name").toString();
-                String ChapterID = JsonPath.read(string2, "$.ID").toString();
+                String ChapterName = JsonPath.read(string2, "$.name").toString();
+                String ChapterID = JsonPath.read(string2, "$.id").toString();
                 //                				System.out.println(ChapterID+" : "+ChapterName);
 
                 ArrayList<CatalogListLevel3> level3list = new ArrayList<>();
-                List<Map<String, Object>> ChildrenChapter = JsonPath.read(string2, "$.Children[*]");
+                List<Map<String, Object>> ChildrenChapter = JsonPath.read(string2, "$.children[*]");
                 for (Map<String, Object> string3 : ChildrenChapter) {
-                    String ChildrenChapterName = JsonPath.read(string3, "$.Name").toString();
-                    String ChildrenChapterID = JsonPath.read(string3, "$.ID").toString();
+                    String ChildrenChapterName = JsonPath.read(string3, "$.name").toString();
+                    String ChildrenChapterID = JsonPath.read(string3, "$.id").toString();
                     //					System.out.println(ChildrenChapterID+" : "+ChildrenChapterName);
                     if (isChapter(ChildrenChapterName)) {
                         level3list.add(new CatalogListLevel3(ChildrenChapterID, ChildrenChapterName));
