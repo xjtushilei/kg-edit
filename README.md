@@ -29,3 +29,5 @@
 
 
 maven的pom文件已经停止了维护，请忽略。
+
+windows下部署的话，phantomjs.exe需要人工添加，github不支持上传exe。linux下使用不影响。
