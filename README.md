@@ -25,7 +25,5 @@
 
 
 ## 其他
-目前项目主要在维护gradle，若有jar包修改，请修改该配置文件（奥鹏服务器使用gradle进行自动化构建）。
-
 
 windows下部署的话，phantomjs.exe需要人工添加，github不支持上传exe。linux下使用不影响。
