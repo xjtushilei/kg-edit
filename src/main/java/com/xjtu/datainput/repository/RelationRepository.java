@@ -25,4 +25,5 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
     List<RelationCatalog> findRelationByClassID(String ClassID);
 
 
+    List<Relation> findByClassID(String ClassID);
 }

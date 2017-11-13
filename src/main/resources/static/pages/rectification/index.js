@@ -39,6 +39,7 @@ app.controller('menu', function ($scope, $http) {
             .done(function (json) {
                 // console.log(json)
                 console.log("加载课程列表 success");
+
                 ///计算两个整数的百分比值
                 function GetPercent(num, total) {
                     num = parseFloat(num);
@@ -144,19 +145,21 @@ app.controller('menu', function ($scope, $http) {
 
     $scope.deleteText = function (fragmentID) {
         // console.log($('#textarea').val())
-        $.ajax({
-            url: ip + "/rectification/deleteText",
-            type: 'get',
-            data: {
-                FragmentID: fragmentID,
-                TermID: $scope.nowTerm.termID
-            },
-            dataType: "json"
-        })
-            .done(function (json) {
-                console.log(json.success);
-                $scope.getFacetFragmentList($scope.nowFacet)
+        if (confirm('确定要执行此操作吗?')) {
+            $.ajax({
+                url: ip + "/rectification/deleteText",
+                type: 'get',
+                data: {
+                    FragmentID: fragmentID,
+                    TermID: $scope.nowTerm.termID
+                },
+                dataType: "json"
             })
+                .done(function (json) {
+                    console.log(json.success);
+                    $scope.getFacetFragmentList($scope.nowFacet)
+                })
+        }
     }
     $scope.lookImage = function (ImageAPI, ImageID) {
         $scope.nowImageID = ImageID
@@ -165,20 +168,23 @@ app.controller('menu', function ($scope, $http) {
     }
 
     $scope.deleteImage = function (imageID) {
-        // console.log($('#textarea').val())
-        $.ajax({
-            url: ip + "/rectification/deleteImage",
-            type: 'get',
-            data: {
-                TermID: $scope.nowTerm.termID,
-                ImageID: imageID
-            },
-            dataType: "json"
-        })
-            .done(function (json) {
-                console.log(json.success);
-                $scope.getFacetFragmentList($scope.nowFacet)
+        if (confirm('确定要执行此操作吗?')) {
+            // console.log($('#textarea').val())
+            $.ajax({
+                url: ip + "/rectification/deleteImage",
+                type: 'get',
+                data: {
+                    TermID: $scope.nowTerm.termID,
+                    ImageID: imageID
+                },
+                dataType: "json"
             })
+                .done(function (json) {
+                    console.log(json.success);
+                    $scope.getFacetFragmentList($scope.nowFacet)
+                })
+        }
+
     }
 
 
@@ -310,29 +316,32 @@ app.controller('menu', function ($scope, $http) {
             })
     }
     $scope.deleteFacetfun = function (x) {
-        $.ajax({
-            url: ip + "/rectification/deleteFacet",
-            type: 'get',
-            data: {
-                TermID: $scope.nowTerm.termID,
-                FacetName: x
-            },
-            dataType: "json",
-            contentType: 'application/x-www-form-urlencoded'
-        })
-            .done(function (data) {
-                $('#myModalInfoLabel').html("删除分面成功！")
-                $('#myModalInfo').modal('toggle');
-                $scope.getClassFacetList($scope.nowTerm)
+        if (confirm('确定要执行此操作吗?')) {
+            $.ajax({
+                url: ip + "/rectification/deleteFacet",
+                type: 'get',
+                data: {
+                    TermID: $scope.nowTerm.termID,
+                    FacetName: x
+                },
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded'
             })
-            .fail(function (data) {
-                var heretemp = ''
-                // console.log(data)
-                for (key in data.responseJSON) heretemp = data.responseJSON[key];
-                $('#myModalInfoLabel').html("</br>" + heretemp)
-                $('#myModalInfo').modal('toggle');
-                $scope.getClassFacetList($scope.nowTerm)
-            })
+                .done(function (data) {
+                    $('#myModalInfoLabel').html("删除分面成功！")
+                    $('#myModalInfo').modal('toggle');
+                    $scope.getClassFacetList($scope.nowTerm)
+                })
+                .fail(function (data) {
+                    var heretemp = ''
+                    // console.log(data)
+                    for (key in data.responseJSON) heretemp = data.responseJSON[key];
+                    $('#myModalInfoLabel').html("</br>" + heretemp)
+                    $('#myModalInfo').modal('toggle');
+                    $scope.getClassFacetList($scope.nowTerm)
+                })
+        }
+
     }
 
 
