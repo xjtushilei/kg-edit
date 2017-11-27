@@ -75,11 +75,14 @@ app.controller('menu', function ($scope, $http) {
 
                     // },
                     'click .remove': function (e, value, row, index) {
-                        $http.get(ip + "/dependency/delete?temp=" + new Date().getTime() + "&dependencyid=" + row.dependencyID).success(
-                            function (json) {
-                                console.log("删除" + row.startTermName + "-" + row.endTermName + "成功")
-                                $scope.getall();
-                            });
+                        if (confirm('确定要执行此操作吗?')) {
+                            $http.get(ip + "/dependency/delete?temp=" + new Date().getTime() + "&dependencyid=" + row.dependencyID).success(
+                                function (json) {
+                                    console.log("删除" + row.startTermName + "-" + row.endTermName + "成功")
+                                    $scope.getall();
+                                });
+                        }
+
                     }
                 }
             }

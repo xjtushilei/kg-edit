@@ -133,11 +133,14 @@ app.controller('menu', function ($scope, $http) {
 
                     // },
                     'click .remove': function (e, value, row, index) {
-                        $http.get(ip + "/datainput/deleteReletionByRelationID?temp=" + new Date().getTime() + "&relationID=" + row.relationID).success(
-                            function (json) {
-                                console.log("删除" + row.TermName + "成功")
-                                f5Getclass(row.ClassName);
-                            });
+                        if (confirm('确定要执行此操作吗?')) {
+                            $http.get(ip + "/datainput/deleteReletionByRelationID?temp=" + new Date().getTime() + "&relationID=" + row.relationID).success(
+                                function (json) {
+                                    console.log("删除" + row.TermName + "成功")
+                                    f5Getclass();
+                                });
+                        }
+
                     }
                 }
             }
@@ -145,8 +148,17 @@ app.controller('menu', function ($scope, $http) {
     });
 
 
-    $scope.getClassStatus = function (ClassName) {
-        f5Getclass(ClassName)
+    $scope.getClassStatus = function () {
+        f5Getclass()
+    }
+    $scope.deleteAll = function () {
+        if (confirm('确定要执行此操作吗?')) {
+            $http.get(ip + "/datainput/deleteALL?temp=" + new Date().getTime() + "&ClassID=" + getCookie("nowclassid")).success(
+                function (json) {
+                    console.log("删除<" + getCookie("nowclassid") + ">成功")
+                    f5Getclass();
+                });
+        }
     }
 
 

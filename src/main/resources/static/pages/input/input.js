@@ -98,29 +98,32 @@ app.controller('menu', function ($scope, $http) {
             });
     }
     $scope.deleteTerm = function (x) {
-        console.log(x.termName + '将要被删除')
-        $.ajax({
-            url: ip + '/datainput/deleteReletionByRelationID',
-            type: 'get',
-            async: true,
-            dataType: 'json',
-            data: {
-                relationID: x.relationID
-            },
-        })
-            .done(function (data) {
-                var error = 'success'
-                console.log("deleteTerm success");
-                for (key in data) success = data[key];
-                console.log("deleteTerm success:" + success);
-
+        if (confirm('确定要执行此操作吗?')) {
+            console.log(x.termName + '将要被删除')
+            $.ajax({
+                url: ip + '/datainput/deleteReletionByRelationID',
+                type: 'get',
+                async: true,
+                dataType: 'json',
+                data: {
+                    relationID: x.relationID
+                },
             })
-            .fail(function (data) {
-                var error = ''
-                for (key in data) error = data[key];
-                console.log("deleteTerm error:" + error);
-                alert("删除失败:" + error)
-            });
+                .done(function (data) {
+                    var error = 'success'
+                    console.log("deleteTerm success");
+                    for (key in data) success = data[key];
+                    console.log("deleteTerm success:" + success);
+
+                })
+                .fail(function (data) {
+                    var error = ''
+                    for (key in data) error = data[key];
+                    console.log("deleteTerm error:" + error);
+                    alert("删除失败:" + error)
+                });
+        }
+
     }
 
     function searchTerm() {

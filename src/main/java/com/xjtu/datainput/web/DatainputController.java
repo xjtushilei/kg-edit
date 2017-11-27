@@ -217,4 +217,27 @@ public class DatainputController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @RequestMapping(value = "/deleteALL", method = RequestMethod.GET)
+    public ResponseEntity gdeleteALLRelation(
+            @RequestParam(value = "ClassID", defaultValue = "a7a6e4b7-e5d1-42a4-b7d5-0f7c6a7ff9e5") String ClassID
+    ) {
+        logger.info("正在删除所有知识点.classid=" + ClassID);
+        try {
+            relationRepository.delete(relationRepository.findByClassID(ClassID));
+            logger.info("正在删除删除没用的信息：termRepository");
+            //删除没用的信息
+            termRepository.findNoUse().iterator().forEachRemaining(id -> {
+                termRepository.delete(id);
+            });
+            logger.info("正在删除删除没用的信息：catalogRepository");
+            catalogRepository.findNoUse().iterator().forEachRemaining(id -> {
+                catalogRepository.delete(id);
+            });
+        } catch (Exception e) {
+            logger.error("删除所有知识点失败 ", e);
+        }
+        logger.info("删除所有知识点成功！.classid=" + ClassID);
+        return ResponseEntity.status(HttpStatus.OK).body(new Success("删除成功！"));
+    }
 }
