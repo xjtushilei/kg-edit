@@ -5,7 +5,6 @@ package com.xjtu.common;
  */
 public class Config {
 
-
     /**
      * 奥鹏的API网址，获取课程的章节等信息
      *
