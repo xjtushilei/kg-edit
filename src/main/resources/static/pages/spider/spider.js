@@ -191,7 +191,7 @@ app.controller('menu', function ($scope, $http) {
             console.log(json[0].termSum)
             if (json[0].alreadyTermNum < json[0].termSum) {
                 $("#myModalLabel").html("《" + json[0].className + "》")
-                $("#myModalContent").html("存在尚未爬取得知识点，请点击 开始爬取 ！</br>如果您刚刚点击，请稍后再试！");
+                $("#myModalContent").html("存在尚未爬取得知识点，请点击 开始爬取 ！</br>如果您刚刚点击，请稍后再试！</br>如果您等待很久没有响应，请再次点击！");
                 $('#myModal').modal('toggle');
             }
 
@@ -311,7 +311,9 @@ app.controller('menu', function ($scope, $http) {
                                         $('#myModal').modal('toggle');
                                     });
                                 $("#myModalLabel").html("《" + nowclassname + "》")
-                                $("#myModalContent").html(row.className + "</br> 开始爬取数据.......");
+                                $("#myModalContent").html(row.className +
+                                    "</br> 开始爬取数据......." + "</br>" +
+                                    " 请点击关闭，注意表格中的完成率！");
                                 $('#myModal').modal('toggle');
                                 getSpiderStatus();
 

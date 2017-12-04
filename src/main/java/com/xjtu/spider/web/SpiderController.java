@@ -100,7 +100,7 @@ public class SpiderController {
 
             return ResponseEntity.status(HttpStatus.OK).body(new Success("课程ID为：" + classID + "的课程已经处理完毕。。。"));
         } catch (Exception e) {
-            logger.error("获取课程下的知识点失败。。。", e);
+            logger.error("获取课程下的知识点失败。。。" + e);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Error("课程ID为：" + classID + "的课程处理失败。。。"));
         }
 
@@ -181,7 +181,7 @@ public class SpiderController {
                         catalog = catalogRepository.findByCatalogID(catalogID);
                         catalogSet.add(catalog);
                     } catch (Exception e) {
-                        logger.error("查询章节信息失败。。。", e);
+                        logger.error("查询章节信息失败。。。" + e);
                     }
                 }
 
@@ -415,7 +415,6 @@ public class SpiderController {
         spiderStatusList.add(spiderStatus);
 
 
-        logger.info("获取所有正在爬取课程的状态结束。。。");
         // 循环结束，设置返回结果为所有正在爬取课程的状态
         responseEntity = ResponseEntity.status(HttpStatus.OK).body(spiderStatusList);
 
