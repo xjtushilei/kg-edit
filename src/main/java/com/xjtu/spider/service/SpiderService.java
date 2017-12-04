@@ -49,10 +49,10 @@ public class SpiderService {
         }
 
         // 图片爬取测试：输入知识点和ID，返回List<Image>
-//        List<Image> imageList = spiderService.getSingleTermFacetImages("邻域", 10L);
-//        for (Image image : imageList) {
-//            System.out.println(image.toString());
-//        }
+        //        List<Image> imageList = spiderService.getSingleTermFacetImages("邻域", 10L);
+        //        for (Image image : imageList) {
+        //            System.out.println(image.toString());
+        //        }
     }
 
     /**
@@ -100,7 +100,7 @@ public class SpiderService {
                 String facetName = parseFragmentService.titleToFacet(facet, relation); // 分面名全部设为一级标题（新标准）
                 facetName = facetAlgoService.getfacet(facetName); // 采用分面算法进行处理
                 Text text = new Text(fragmentContent, fragmentUrl, fragmentPostTime, fragmentScratchTime, termID, termName, facetName);
-//                logger.info(text.toString());
+                //                logger.info(text.toString());
                 list.add(text);
             }
         } else {
@@ -152,16 +152,20 @@ public class SpiderService {
             Document docFacetImage = parseFragmentService.getDocImage(facetImageUrl); // 解析
             ArrayList<String> facetImageList = parseFragmentService.getFacetImage(docFacetImage); // 分面下的前几张图片的链接
             for (int j = 0; j < facetImageList.size(); j++) {
-                logger.info("图片链接：" + facetImageList.get(j));
-                // 内容为InputStream流，对应数据库字段属性为Blob
-                byte[] imageContent = imageService.getImageFromNetByUrl(facetImageList.get(j)); // 下载图片url为输入流
-                String imageUrl = facetImageList.get(j);
-                String imageScratchTime = parseFragmentService.getScratchTime();
-                String termName = term;
-                String facetName = facet;
-                String imageAPI = null;
-                Image fragment = new Image(imageContent, imageUrl, imageScratchTime, termID, termName, facetName, imageAPI);
-                list.add(fragment);
+                try {
+                    logger.info("图片链接：" + facetImageList.get(j));
+                    // 内容为InputStream流，对应数据库字段属性为Blob
+                    byte[] imageContent = imageService.getImageFromNetByUrl(facetImageList.get(j)); // 下载图片url为输入流
+                    String imageUrl = facetImageList.get(j);
+                    String imageScratchTime = parseFragmentService.getScratchTime();
+                    String termName = term;
+                    String facetName = facet;
+                    String imageAPI = null;
+                    Image fragment = new Image(imageContent, imageUrl, imageScratchTime, termID, termName, facetName, imageAPI);
+                    list.add(fragment);
+                } catch (Exception e) {
+                    logger.info("下载超时：图片链接：" + facetImageList.get(j));
+                }
             }
         }
         return list;
