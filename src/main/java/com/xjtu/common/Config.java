@@ -10,8 +10,8 @@ public class Config {
      *
      * @author 石磊
      */
-    public static String MOOC2U_API_GET_ONE_COURSE_INFO = "http://pre.mooc2u.com/api/open/CourseOpen/GetCourseData";
-    public static String MOOC2U_API_GET_ALL_COURSE = "http://pre.mooc2u.com/api/open/CourseOpen/GetAllCourseData";
+    public static String MOOC2U_API_GET_ONE_COURSE_INFO = "http://www.mooc2u.com/api/open/CourseOpen/GetCourseData";
+    public static String MOOC2U_API_GET_ALL_COURSE = "http://www.mooc2u.com/api/open/CourseOpen/GetAllCourseData";
 
 
     /**
