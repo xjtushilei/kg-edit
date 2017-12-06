@@ -235,7 +235,7 @@ app.controller('menu', function ($scope, $http) {
                         valign: 'middle',
                     },
                     {
-                        title: '知识点出错个数',
+                        title: '没有爬取到数据的知识点个数',
                         field: 'errorTermNum',
                         align: 'center',
                         valign: 'middle',
@@ -273,7 +273,7 @@ app.controller('menu', function ($scope, $http) {
                                 '<i class="glyphicon glyphicon-download-alt"></i>开始爬取',
                                 '</a> &nbsp',
                                 '<a class="edit ml10" href="javascript:void(0)" title="Edit" >',
-                                '<i class="glyphicon glyphicon-edit"></i>修改无法爬取知识点',
+                                '<i class="glyphicon glyphicon-edit"></i>修改无法爬取数据的知识点',
 
 
                                 //   '</a>',
